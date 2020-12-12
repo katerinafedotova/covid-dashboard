@@ -44,7 +44,7 @@ module.exports = {
         type: 'asset/inline',
       },
       {
-        test: /\.(scss|css)$/,
+        test: /\.(css)$/,
         use: ['style-loader', 'css-loader'],
       },
     ],
