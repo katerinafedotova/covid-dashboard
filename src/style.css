@@ -53,6 +53,12 @@ body {
     justify-content: space-around;
     align-items: center;
 }
+
+.cases__data {
+    color: red;
+    font-weight: 700;
+    font-size: 32px;
+}
 /* first column end */
 
 /* second column start */
