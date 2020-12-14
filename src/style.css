@@ -59,6 +59,26 @@ body {
     font-weight: 700;
     font-size: 32px;
 }
+
+.cases__by__country-list {
+    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.country-data-container {
+    width: 100%;
+    text-align: left;
+    border-bottom: 2px solid black;
+}
+
+.country-cases {
+    margin-right: 7px;
+    color: red;
+    font-weight: 700;
+    font-size: 19px;
+}
 /* first column end */
 
 /* second column start */
