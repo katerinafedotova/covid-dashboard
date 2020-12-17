@@ -1,25 +1,21 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { array, colors, sizeInEm } from './mapMarkersInfo';
+import { statsArray, colors, sizeInEm } from './constants';
 
-function setLayers(...args) {
+export default function setLayers(...args) {
   const mymap = args[0];
   const geoJson = args[1];
-  let targetId = args[2];
+  const targetId = args[2];
   const targetNum = args[3];
-
+  let parameterName;
   let color = colors[0];
-  let arr = array[0];
+  let arr = statsArray[0];
+  // set color of markers and figures displayed in legend
   if (targetId !== undefined) {
-    if (targetNum < 6) {
-      color = colors[targetNum];
-      arr = array[targetNum];
-    } else {
-      color = colors[targetNum - 6];
-      arr = array[targetNum - 6];
-    }
+    color = colors[targetNum];
+    arr = statsArray[targetNum];
+    parameterName = targetId.replaceAll('-', ' ');
   }
-  // set width and height of markers
   // based on https://www.freecodecamp.org/news/how-to-create-a-coronavirus-covid-19-dashboard-map-app-in-react-with-gatsby-and-leaflet/#step-2-fetching-the-coronavirus-data
   const geoJsonLayers = new L.GeoJSON(geoJson, {
     pointToLayer: (feature = {}, latlng) => {
@@ -33,6 +29,7 @@ function setLayers(...args) {
         todayCases,
         todayDeaths,
         todayRecovered,
+        population,
 
       } = properties;
 
@@ -45,10 +42,18 @@ function setLayers(...args) {
         todayDeaths,
         todayRecovered];
       let parameterToCompare;
-      for (let i = 0; i < 12; i += 1) {
-        parameterToCompare = arrToCompare[targetNum] || cases;
+      if (targetNum === undefined) {
+        parameterToCompare = cases;
+      } else if (targetNum >= 6) {
+        if (population === 0) {
+          parameterToCompare = 0;
+        } else {
+          parameterToCompare = ((arrToCompare[targetNum - 6] / population) * 100000).toFixed(1);
+        }
+      } else {
+        parameterToCompare = arrToCompare[targetNum];
       }
-      // if (parameterToCompare === undefined) { parameterToCompare = cases; }
+      // set marker size
       for (let i = 0; i < sizeInEm.length; i += 1) {
         if (i === 0 && parameterToCompare < arr[i]) {
           size = sizeInEm[i];
@@ -58,13 +63,14 @@ function setLayers(...args) {
         }
       }
       if (targetId === undefined) {
-        targetId = 'cases';
+        parameterName = 'cases';
       }
+      // set marker content
       const html = `
         <span class="icon-marker" style = " height: ${size}em; width: ${size}em; background-color: ${color};">
         <span class="icon-marker-tooltip">
             <h2>${country}</h2>
-            <p><strong style = "text-transform: capitalize">${targetId}:</strong> ${parameterToCompare}</p>
+            <p><strong style = "text-transform: capitalize">${parameterName}:</strong> ${parameterToCompare.toLocaleString('en', { maximumFractionDigits: 0 })}</p>
         </span>
         </span>
       `;
@@ -78,37 +84,21 @@ function setLayers(...args) {
     },
   });
   geoJsonLayers.addTo(mymap);
+  // set legend
   const legendSizeInEm = sizeInEm.map((el) => el / 2);
   const legend = L.control({ position: 'topright' });
   legend.onAdd = () => {
     const div = L.DomUtil.create('div', 'legend');
-    div.innerHTML += `<h4>${targetId}</h4>`;
+    div.innerHTML += `<h4>${parameterName}</h4>`;
     for (let i = 0; i < legendSizeInEm.length; i += 1) {
       if (i === 0) {
-        div.innerHTML += `<div class = "legend__info__container"><div style="background: ${color}; height: ${legendSizeInEm[i]}em; width: ${legendSizeInEm[i]}em"></div><div> < ${arr[i]}</div></div>`;
+        div.innerHTML += `<div class = "legend__info__container"><div style="background: ${color}; height: ${legendSizeInEm[i]}em; width: ${legendSizeInEm[i]}em"></div><div> < ${arr[i].toLocaleString('en', { maximumFractionDigits: 0 })}</div></div>`;
       } else {
-        div.innerHTML += `<div class = "legend__info__container"><div style="background: ${color}; height: ${legendSizeInEm[i]}em; width: ${legendSizeInEm[i]}em"></div><div> > ${arr[i]}</div></div>`;
+        div.innerHTML += `<div class = "legend__info__container"><div style="background: ${color}; height: ${legendSizeInEm[i]}em; width: ${legendSizeInEm[i]}em"></div><div> > ${arr[i].toLocaleString('en', { maximumFractionDigits: 0 })}</div></div>`;
       }
     }
     return div;
   };
 
   legend.addTo(mymap);
-}
-
-export default function check(...args) {
-  const mymap = args[0];
-  const geoJson = args[1];
-  const targetId = args[2];
-  const targetNum = args[3];
-  if (args[2] !== undefined) {
-    setLayers(mymap, geoJson, targetId, targetNum);
-  } else {
-    //   const info = [ cases, deaths, recovered, todayCases, todayDeaths, todayRecovered]
-    //   Info [dataId]
-    // const per100 = population*100000
-    // If dataId > 6 => info [dataId]/per100
-
-    setLayers(mymap, geoJson);
-  }
 }

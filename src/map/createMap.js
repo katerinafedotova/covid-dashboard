@@ -1,12 +1,9 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import check from './setMarkersAndInfo';
+import setLayers from './setLayers';
 
-export default function createMyMap(geoJson, targetId, targetNum) {
-  console.log(geoJson);
-  // const map = document.querySelector('#mapid');
+export default function createMap(geoJson, targetId, targetNum) {
   if (targetId !== undefined) {
-    console.log(targetId);
     document.querySelector('#mapid').remove();
     const switchers = document.querySelector('.switchers');
     const container = document.querySelector('.second__column__content');
@@ -29,5 +26,5 @@ export default function createMyMap(geoJson, targetId, targetNum) {
     zoomOffset: -1,
     accessToken: 'pk.eyJ1Ijoia2F0ZXJpbmFmZWRvdG92YSIsImEiOiJja2luN3Q4Z3gxMGxwMzJxamI5MWpodThvIn0.xuyftPynmYDxhH177-wFgg',
   }).addTo(mymap);
-  check(mymap, geoJson, targetId, targetNum);
+  setLayers(mymap, geoJson, targetId, targetNum);
 }
