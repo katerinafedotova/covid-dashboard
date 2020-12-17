@@ -1,16 +1,45 @@
 import './style.css';
 import createMyMap from './map/createMap';
-// import setMarkersAndInfo from './map/setMarkersAndInfo';
-// import createNewMap from './createNewMap';
+// import createNewMap from './map/createNewMap';
 
+let geoJson;
+// set geoJson object for map
+function createGeoJson(data) {
+  geoJson = {
+    features: data.map((info = {}) => {
+      const {
+        country, cases, deaths, recovered, todayCases, todayDeaths, todayRecovered, population,
+      } = info;
+      const { countryInfo = {} } = info;
+      const { lat, long } = countryInfo;
+      return {
+        type: 'Feature',
+        properties: {
+          country,
+          cases,
+          deaths,
+          recovered,
+          todayCases,
+          todayDeaths,
+          todayRecovered,
+          population,
+        },
+        geometry: {
+          type: 'Point',
+          coordinates: [long, lat],
+        },
+      };
+    }),
+  };
+  createMyMap(geoJson);
+}
 let data;
-
 async function getCountriesData() {
   let response;
   try {
     response = await fetch('https://disease.sh/v3/covid-19/countries');
     data = await response.json();
-    createMyMap(data);
+    createGeoJson(data);
   } catch (e) {
     throw new Error(`Failed to fetch countries: ${e.message}`, e);
   }
@@ -18,6 +47,7 @@ async function getCountriesData() {
 
 getCountriesData();
 Array.from(document.querySelectorAll('.switcher')).forEach((switcher) => switcher.addEventListener('click', (e) => {
-  const targetId = e.target.dataset;
-  // createNewMap(data, targetId);
+  const targetId = e.target.closest('.switcher').dataset;
+  console.log(targetId);
+  createMyMap(geoJson, targetId);
 }));

@@ -2,40 +2,19 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import check from './setMarkersAndInfo';
 
-// based on https://www.freecodecamp.org/news/how-to-create-a-coronavirus-covid-19-dashboard-map-app-in-react-with-gatsby-and-leaflet/#step-2-fetching-the-coronavirus-data
-function structureData(mymap, data) {
-  const geoJson = {
-    features: data.map((info = {}) => {
-      const {
-        country, cases, deaths, recovered, todayCases, todayDeaths, todayRecovered, population,
-      } = info;
-      const { countryInfo = {} } = info;
-      const { lat, long } = countryInfo;
-      return {
-        type: 'Feature',
-        properties: {
-          country,
-          cases,
-          deaths,
-          recovered,
-          todayCases,
-          todayDeaths,
-          todayRecovered,
-          population,
-        },
-        geometry: {
-          type: 'Point',
-          coordinates: [long, lat],
-        },
-      };
-    }),
-  };
-  check(mymap, geoJson);
-}
+export default function createMyMap(geoJson, targetId) {
+  console.log(geoJson);
+  // const map = document.querySelector('#mapid');
+  if (targetId !== undefined) {
+    console.log(targetId);
+    document.querySelector('#mapid').remove();
+    const switchers = document.querySelector('.switchers');
+    const container = document.querySelector('.second__column__content');
+    const div = document.createElement('div');
+    container.insertBefore(div, switchers);
+    div.setAttribute('id', 'mapid');
+  }
 
-export default function createMyMap(data, targetId) {
-  console.log(data);
-  console.log(targetId);
   const mymap = L.map('mapid', {
     center: [0, 20],
     zoom: 1,
@@ -50,5 +29,5 @@ export default function createMyMap(data, targetId) {
     zoomOffset: -1,
     accessToken: 'pk.eyJ1Ijoia2F0ZXJpbmFmZWRvdG92YSIsImEiOiJja2luN3Q4Z3gxMGxwMzJxamI5MWpodThvIn0.xuyftPynmYDxhH177-wFgg',
   }).addTo(mymap);
-  structureData(mymap, data);
+  check(mymap, geoJson, targetId);
 }
