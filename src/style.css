@@ -68,9 +68,17 @@ body {
 }
 
 .country-data-container {
+    padding: 3px 0;
     width: 100%;
     text-align: left;
     border-bottom: 2px solid black;
+    display: flex;
+    align-items: center;
+}
+
+.country-data-container img {
+    width: 44px;
+    height: 21px;
 }
 
 .country-cases {
@@ -78,6 +86,10 @@ body {
     color: red;
     font-weight: 700;
     font-size: 19px;
+}
+
+.country-name {
+    margin-right: 20px;
 }
 /* first column end */
 

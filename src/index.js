@@ -1,61 +1,56 @@
 import './style.css';
 
-import createDomElement from './utils/createDomElement.js';
+import createDomElement from './utils/createDomElement';
+import generateList from './list/generateList';
 
+const globalCases = createDomElement('span', 'cases__data', null, document.querySelector('.cases__global'));
 
-const globalCases = createDomElement('span', 'cases__data', null, document.querySelector('.cases__global'))
-const casesListContainer = document.querySelector('.cases__by__country-list')
+let globalData;
+let countriesData;
 
-function getGlobalCovidData() {
-    fetch(`https://disease.sh/v3/covid-19/all`)
-      .then(response => {
-        return response.json();
-      })
-      .then(respData => {
-        let globalCovidData = respData;
-        globalCases.innerText = globalCovidData.cases;
-
-      });
-  }
-
- 
-
-async function getCountriesCovidData() {
-    const url = `https://disease.sh/v3/covid-19/countries`;
-    const result = await fetch(url);
-    if (result.ok) {
-        let countriesCovidData = await result.json();
-        ///сперва сортиро=ую countriesCovidData затем закидываем в генератетабле
-        generateTable(countriesCovidData);
-        
-    } else {
-        throw new Error('oops')
-    }
+function getGlobalData() {
+  fetch('https://disease.sh/v3/covid-19/all')
+    .then((response) => response.json())
+    .then((resp) => {
+      globalData = resp;
+      globalCases.innerText = globalData.cases;
+    });
 }
 
-function cleanContainer(dataContainer) {
-    while (dataContainer.firstChild) {
-      dataContainer.removeChild(dataContainer.firstChild);
-    }
+function getCountriesData() {
+  fetch('https://disease.sh/v3/covid-19/countries')
+    .then((response) => response.json())
+    .then((respData) => {
+      countriesData = respData;
+      const countriesDataSort = countriesData.sort((a, b) => b.cases - a.cases);
+      // createList(countriesDataSort);
+      generateList(countriesDataSort);
+    });
 }
 
-const generateTable = (data, ) => {
-    cleanContainer(casesListContainer);
-    data.forEach(countryData  => {
-        const countryDataContainer = createDomElement('div', 'country-data-container', null, casesListContainer)
-        const countryCases = createDomElement('span', 'country-cases', null, countryDataContainer);
-        const countryName = createDomElement('span', 'country-name', null, countryDataContainer );
-        countryCases.innerText = countryData.cases;
-        countryName.innerText = countryData.country;
-    })
-}
-
-
-
-
-
+// let dataJson;
+// function createList(data) {
+//   dataJson = data.map((info = {}) => {
+//     const {
+//       country, cases, deaths, recovered, todayCases, todayDeaths, todayRecovered, population,
+//     } = info;
+//     const { countryInfo = {} } = info;
+//     const { flag } = countryInfo;
+//     return {
+//       country,
+//       cases,
+//       deaths,
+//       recovered,
+//       todayCases,
+//       todayDeaths,
+//       todayRecovered,
+//       population,
+//       flag,
+//     };
+//   });
+// }
 
 document.addEventListener('DOMContentLoaded', () => {
-    getGlobalCovidData();
-    getCountriesCovidData();
-  })
+  getGlobalData();
+  getCountriesData();
+});
