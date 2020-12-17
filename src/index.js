@@ -47,7 +47,10 @@ async function getCountriesData() {
 
 getCountriesData();
 Array.from(document.querySelectorAll('.switcher')).forEach((switcher) => switcher.addEventListener('click', (e) => {
-  const targetId = e.target.closest('.switcher').dataset;
+  const targetId = e.target.closest('.switcher').dataset.id;
+  const targetNum = e.target.closest('.switcher').dataset.num;
   console.log(targetId);
-  createMyMap(geoJson, targetId);
+  console.log(targetNum);
+
+  createMyMap(geoJson, targetId, targetNum);
 }));

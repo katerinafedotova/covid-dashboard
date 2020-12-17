@@ -1,13 +1,25 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { array, colors, sizeInEm } from './mapMarkersInfo';
 
-function setLayers(mymap, geoJson, color, targetId) {
-  const casesArr = [20000, 20000, 100000, 500000, 1000000, 2000000];
-  // set width and height of markers
-  const paramsInEm = [0.7, 1.2, 1.7, 2.2, 2.7, 3.2];
-  if (targetId === undefined) {
-    targetId = 'cases';
+function setLayers(...args) {
+  const mymap = args[0];
+  const geoJson = args[1];
+  let targetId = args[2];
+  const targetNum = args[3];
+
+  let color = colors[0];
+  let arr = array[0];
+  if (targetId !== undefined) {
+    if (targetNum < 6) {
+      color = colors[targetNum];
+      arr = array[targetNum];
+    } else {
+      color = colors[targetNum - 6];
+      arr = array[targetNum - 6];
+    }
   }
+  // set width and height of markers
   // based on https://www.freecodecamp.org/news/how-to-create-a-coronavirus-covid-19-dashboard-map-app-in-react-with-gatsby-and-leaflet/#step-2-fetching-the-coronavirus-data
   const geoJsonLayers = new L.GeoJSON(geoJson, {
     pointToLayer: (feature = {}, latlng) => {
@@ -16,24 +28,43 @@ function setLayers(mymap, geoJson, color, targetId) {
       const {
         country,
         cases,
-        // deaths,
-        // recovered,
+        deaths,
+        recovered,
+        todayCases,
+        todayDeaths,
+        todayRecovered,
+
       } = properties;
-      // console.log(properties);
-      let param;
-      for (let i = 0; i < paramsInEm.length; i += 1) {
-        if (i === 0 && cases < casesArr[i]) {
-          param = paramsInEm[i];
+
+      let size;
+      const arrToCompare = [
+        cases,
+        deaths,
+        recovered,
+        todayCases,
+        todayDeaths,
+        todayRecovered];
+      let parameterToCompare;
+      for (let i = 0; i < 12; i += 1) {
+        parameterToCompare = arrToCompare[targetNum] || cases;
+      }
+      // if (parameterToCompare === undefined) { parameterToCompare = cases; }
+      for (let i = 0; i < sizeInEm.length; i += 1) {
+        if (i === 0 && parameterToCompare < arr[i]) {
+          size = sizeInEm[i];
         }
-        if (cases > casesArr[i]) {
-          param = paramsInEm[i];
+        if (parameterToCompare > arr[i]) {
+          size = sizeInEm[i];
         }
       }
+      if (targetId === undefined) {
+        targetId = 'cases';
+      }
       const html = `
-        <span class="icon-marker" style = " height: ${param}em; width: ${param}em; background-color: ${color};">
+        <span class="icon-marker" style = " height: ${size}em; width: ${size}em; background-color: ${color};">
         <span class="icon-marker-tooltip">
             <h2>${country}</h2>
-            <p><strong style = "text-transform: capitalize">${targetId}:</strong> ${cases}</p>
+            <p><strong style = "text-transform: capitalize">${targetId}:</strong> ${parameterToCompare}</p>
         </span>
         </span>
       `;
@@ -47,13 +78,17 @@ function setLayers(mymap, geoJson, color, targetId) {
     },
   });
   geoJsonLayers.addTo(mymap);
-  const legendParamsInEm = paramsInEm.map((el) => el / 2);
+  const legendSizeInEm = sizeInEm.map((el) => el / 2);
   const legend = L.control({ position: 'topright' });
   legend.onAdd = () => {
     const div = L.DomUtil.create('div', 'legend');
     div.innerHTML += `<h4>${targetId}</h4>`;
-    for (let i = 0; i < legendParamsInEm.length; i += 1) {
-      div.innerHTML += `<div class = "legend__info__container"><div style="background: ${color}; height: ${legendParamsInEm[i]}em; width: ${legendParamsInEm[i]}em"></div><div> < ${casesArr[i]}</div></div>`;
+    for (let i = 0; i < legendSizeInEm.length; i += 1) {
+      if (i === 0) {
+        div.innerHTML += `<div class = "legend__info__container"><div style="background: ${color}; height: ${legendSizeInEm[i]}em; width: ${legendSizeInEm[i]}em"></div><div> < ${arr[i]}</div></div>`;
+      } else {
+        div.innerHTML += `<div class = "legend__info__container"><div style="background: ${color}; height: ${legendSizeInEm[i]}em; width: ${legendSizeInEm[i]}em"></div><div> > ${arr[i]}</div></div>`;
+      }
     }
     return div;
   };
@@ -64,25 +99,16 @@ function setLayers(mymap, geoJson, color, targetId) {
 export default function check(...args) {
   const mymap = args[0];
   const geoJson = args[1];
-  console.log(mymap);
-  console.log(geoJson);
-  // set different colors for different maps
-  const colors = ['#bd0026', '#f03b20', '#fd8d3c', '#feb24c', '#fed976', '#ffffb2'];
-  if (args[3] !== undefined) {
-    console.log('it was click');
+  const targetId = args[2];
+  const targetNum = args[3];
+  if (args[2] !== undefined) {
+    setLayers(mymap, geoJson, targetId, targetNum);
+  } else {
+    //   const info = [ cases, deaths, recovered, todayCases, todayDeaths, todayRecovered]
+    //   Info [dataId]
+    // const per100 = population*100000
+    // If dataId > 6 => info [dataId]/per100
+
+    setLayers(mymap, geoJson);
   }
-
-  //   const info = [ cases, deaths, recovered, todayCases, todayDeaths, todayRecovered]
-  //   Info [dataId]
-  // const per100 = population*100000
-  // If dataId > 6 => info [dataId]/per100
-
-  setLayers(mymap, geoJson, colors[0]);
-  //   console.log(id);
-  //   const map = document.querySelector('#mapid');
-  //   while (map.firstChild) {
-  //     map.removeChild(map.lastChild);
-  //   }
-  //   console.log(geoJson);
-// }
 }

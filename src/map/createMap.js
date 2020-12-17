@@ -2,7 +2,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import check from './setMarkersAndInfo';
 
-export default function createMyMap(geoJson, targetId) {
+export default function createMyMap(geoJson, targetId, targetNum) {
   console.log(geoJson);
   // const map = document.querySelector('#mapid');
   if (targetId !== undefined) {
@@ -29,5 +29,5 @@ export default function createMyMap(geoJson, targetId) {
     zoomOffset: -1,
     accessToken: 'pk.eyJ1Ijoia2F0ZXJpbmFmZWRvdG92YSIsImEiOiJja2luN3Q4Z3gxMGxwMzJxamI5MWpodThvIn0.xuyftPynmYDxhH177-wFgg',
   }).addTo(mymap);
-  check(mymap, geoJson, targetId);
+  check(mymap, geoJson, targetId, targetNum);
 }
