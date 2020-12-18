@@ -1,14 +1,17 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { statsArray, colors, sizeInEm } from './constants';
+import aspectRatioImg from '../assets/aspect_ratio-24px.svg';
 
 let geoJsonLayers;
 let legend;
+let fullScreen;
 export default function setLayers(mymap, geoJson, targetId, targetNum) {
   // check if switcher clicked
   if (targetId !== undefined) {
     mymap.removeLayer(geoJsonLayers);
     mymap.removeControl(legend);
+    mymap.removeControl(fullScreen);
   }
 
   let parameterName;
@@ -105,4 +108,14 @@ export default function setLayers(mymap, geoJson, targetId, targetNum) {
   };
 
   legend.addTo(mymap);
+
+  fullScreen = L.control({ position: 'bottomleft' });
+  fullScreen.onAdd = () => {
+    const div = L.DomUtil.create('div', 'aspect__ratio');
+    div.style.backgroundImage = `url(${aspectRatioImg})`;
+    // div.innerHTML = `<img src = ${aspectRatioImg}></img>`;
+    return div;
+  };
+  fullScreen.addTo(mymap);
+  console.log(aspectRatioImg);
 }
