@@ -163,6 +163,7 @@ margin-bottom: 1em;
   color: #f3f880;
 }
 .legend {
+  max-width:110px;
   padding: 6px 8px;
   font: 12px Arial, Helvetica, sans-serif;
   background: rgb(124, 121, 121);
@@ -173,7 +174,6 @@ margin-bottom: 1em;
 }
 .legend h4 {
   text-transform: uppercase;
-  max-width: 80px;
 }
 .legend__info__container {
   display: flex;

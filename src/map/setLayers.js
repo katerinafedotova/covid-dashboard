@@ -2,11 +2,15 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { statsArray, colors, sizeInEm } from './constants';
 
-export default function setLayers(...args) {
-  const mymap = args[0];
-  const geoJson = args[1];
-  const targetId = args[2];
-  const targetNum = args[3];
+let geoJsonLayers;
+let legend;
+export default function setLayers(mymap, geoJson, targetId, targetNum) {
+  // check if switcher clicked
+  if (targetId !== undefined) {
+    mymap.removeLayer(geoJsonLayers);
+    mymap.removeControl(legend);
+  }
+
   let parameterName;
   let color = colors[0];
   let arr = statsArray[0];
@@ -17,7 +21,7 @@ export default function setLayers(...args) {
     parameterName = targetId.replaceAll('-', ' ');
   }
   // based on https://www.freecodecamp.org/news/how-to-create-a-coronavirus-covid-19-dashboard-map-app-in-react-with-gatsby-and-leaflet/#step-2-fetching-the-coronavirus-data
-  const geoJsonLayers = new L.GeoJSON(geoJson, {
+  geoJsonLayers = new L.GeoJSON(geoJson, {
     pointToLayer: (feature = {}, latlng) => {
       const { properties = {} } = feature;
 
@@ -48,7 +52,7 @@ export default function setLayers(...args) {
         if (population === 0) {
           parameterToCompare = 0;
         } else {
-          parameterToCompare = ((arrToCompare[targetNum - 6] / population) * 100000).toFixed(1);
+          parameterToCompare = ((arrToCompare[targetNum - 6] / population) * 100000).toFixed(2);
         }
       } else {
         parameterToCompare = arrToCompare[targetNum];
@@ -86,7 +90,7 @@ export default function setLayers(...args) {
   geoJsonLayers.addTo(mymap);
   // set legend
   const legendSizeInEm = sizeInEm.map((el) => el / 2);
-  const legend = L.control({ position: 'topright' });
+  legend = L.control({ position: 'topright' });
   legend.onAdd = () => {
     const div = L.DomUtil.create('div', 'legend');
     div.innerHTML += `<h4>${parameterName}</h4>`;
