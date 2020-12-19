@@ -59,6 +59,58 @@ body {
     justify-content: space-around;
     align-items: center;
 }
+
+.cases__data {
+    color: red;
+    font-weight: 700;
+    font-size: 32px;
+}
+
+.category-name {
+    font-weight: 700;
+}
+
+.cases__by__country-list {
+    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.country-data-container {
+    padding: 3px 0;
+    width: 100%;
+    text-align: left;
+    border-bottom: 2px solid black;
+    display: flex;
+    align-items: center;
+}
+
+.country-data-container_hide {
+    display: none;
+}
+
+.country-data-container img {
+    width: 44px;
+    height: 21px;
+}
+
+.country-cases {
+    margin-right: 7px;
+    color: red;
+    font-weight: 700;
+    font-size: 19px;
+}
+
+.country-name {
+    margin-right: 20px;
+}
+
+mark {
+    background: orange;
+}
+
+
 /* first column end */
 
 /* second column start */

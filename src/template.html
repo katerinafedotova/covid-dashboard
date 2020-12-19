@@ -17,8 +17,30 @@
         <div class="container">
             <div class="first__column">
                 <div class="first__column__content">
-                    <div class="cases__global">Global cases</div>
-                    <div class="cases__by__country">Cases by country</div>
+                    <div class="cases__global">
+                        <h2>Global cases</h2>
+                    </div>
+                </div>
+                <div class="cases__by__country">
+                    <div class="category-name"></div>
+                    <select class="select">
+                    <option class="select__value" data-id="0" data-value="cases" value="Cases">Cases</option>
+                    <option class="select__value" data-id="1" data-value="deaths" value="Deaths">Deaths</option>
+                    <option class="select__value" data-id="2" data-value="recovered" value="Recovered">Recovered</option>
+                    <option class="select__value" data-id="3" data-value="todayCases" value="Today Cases">Today Cases</option>
+                    <option class="select__value" data-id="4" data-value="todayDeaths" value="Today Deaths">Today Deaths</option>
+                    <option class="select__value" data-id="5" data-value="todayRecovered" value="Today Recovered">Today Recovered</option>
+                    <option class="select__value" data-id="6" data-value="cases" value="Cases per 100K">Cases per 100K</option>
+                    <option class="select__value" data-id="7" data-value="deaths" value="Deaths per 100K">Deaths per 100K</option>
+                    <option class="select__value" data-id="8" data-value="recovered" value="Recovered per 100K">Recovered per 100K</option>
+                    <option class="select__value" data-id="9" data-value="todayCases" value="Today Cases per 100K">Today Cases per 100K</option>
+                    <option class="select__value" data-id="10" data-value="todayDeaths" value="Today Deaths per 100K">Today Deaths per 100K</option>
+                    <option class="select__value" data-id="11" data-value="todayRecovered" value="Today Recovered per 100K">Today Recovered per 100K</option>
+                    </select>
+                    <div class="search-country">
+                        <input type="text" class="search">
+                    </div>
+                    <div class="cases__by__country-list"></div>
                 </div>
             </div>
             <div class="second__column">
