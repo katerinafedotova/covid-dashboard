@@ -3,6 +3,7 @@ import './style.css';
 import createDomElement from './utils/createDomElement';
 import generateList from './list/generateList';
 import searchCountry from './list/searchCountry';
+import transformData from './utils/transformData';
 
 const globalCases = createDomElement('span', 'cases__data', null, document.querySelector('.cases__global'));
 const select = document.querySelector('.select');
@@ -41,47 +42,6 @@ select.addEventListener('change', (e) => {
     }
   });
 });
-
-function transformData(data) {
-  return data.map((info = {}) => {
-    const {
-      country, cases, deaths, recovered, todayCases, todayDeaths, todayRecovered, population,
-    } = info;
-    const { countryInfo = {} } = info;
-    const { flag } = countryInfo;
-    return {
-      country,
-      population,
-      flag,
-      properties: [
-        {
-          name: 'cases',
-          value: cases,
-        },
-        {
-          name: 'deaths',
-          value: deaths,
-        },
-        {
-          name: 'recovered',
-          value: recovered,
-        },
-        {
-          name: 'todayCases',
-          value: todayCases,
-        },
-        {
-          name: 'todayDeaths',
-          value: todayDeaths,
-        },
-        {
-          name: 'todayRecovered',
-          value: todayRecovered,
-        },
-      ],
-    };
-  });
-}
 
 search.oninput = searchCountry;
 
