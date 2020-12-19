@@ -1,6 +1,9 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import setLayers from './setLayers';
+// import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
+// import 'leaflet-fullscreen/dist/Leaflet.fullscreen';
+// import 'leaflet-fullscreen/dist/Leaflet.fullscreen.min';
 
 let mymap;
 export default function createMap(geoJson, targetId, targetNum) {
@@ -20,6 +23,7 @@ export default function createMap(geoJson, targetId, targetNum) {
       tileSize: 512,
       zoomOffset: -1,
       accessToken: 'pk.eyJ1Ijoia2F0ZXJpbmFmZWRvdG92YSIsImEiOiJja2luN3Q4Z3gxMGxwMzJxamI5MWpodThvIn0.xuyftPynmYDxhH177-wFgg',
+      invalidateSize: true,
     }).addTo(mymap);
     setLayers(mymap, geoJson);
   }

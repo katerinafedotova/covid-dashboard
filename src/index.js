@@ -31,7 +31,6 @@ function createGeoJson(data) {
       };
     }),
   };
-  console.log(geoJson);
   createMap(geoJson);
 }
 let data;
@@ -40,7 +39,6 @@ async function getCountriesData() {
   try {
     response = await fetch('https://disease.sh/v3/covid-19/countries');
     data = await response.json();
-    console.log(data);
     createGeoJson(data);
   } catch (e) {
     throw new Error(`Failed to fetch countries: ${e.message}`, e);

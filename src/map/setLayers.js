@@ -113,9 +113,15 @@ export default function setLayers(mymap, geoJson, targetId, targetNum) {
   fullScreen.onAdd = () => {
     const div = L.DomUtil.create('div', 'aspect__ratio');
     div.style.backgroundImage = `url(${aspectRatioImg})`;
-    // div.innerHTML = `<img src = ${aspectRatioImg}></img>`;
+    div.addEventListener('click', () => {
+      const firstColumn = document.querySelector('.first__column');
+      const secondColumn = document.querySelector('.second__column');
+      const thirdColumn = document.querySelector('.third__column');
+      firstColumn.classList.toggle('none');
+      secondColumn.classList.toggle('fullscreen');
+      thirdColumn.classList.toggle('none');
+    });
     return div;
   };
   fullScreen.addTo(mymap);
-  console.log(aspectRatioImg);
 }
