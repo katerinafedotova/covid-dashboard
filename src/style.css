@@ -60,6 +60,10 @@ body {
     font-size: 32px;
 }
 
+.category-name {
+    font-weight: 700;
+}
+
 .cases__by__country-list {
     max-height: 200px;
     display: flex;
@@ -74,6 +78,10 @@ body {
     border-bottom: 2px solid black;
     display: flex;
     align-items: center;
+}
+
+.country-data-container_hide {
+    display: none;
 }
 
 .country-data-container img {
@@ -91,6 +99,12 @@ body {
 .country-name {
     margin-right: 20px;
 }
+
+mark {
+    background: orange;
+}
+
+
 /* first column end */
 
 /* second column start */
