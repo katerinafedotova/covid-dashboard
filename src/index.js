@@ -2,6 +2,7 @@ import './style.css';
 import createMap from './map/createMap';
 import createDomElement from './utils/createDomElement';
 import generateList from './list/generateList';
+import generateTable from './table/generateTable';
 import searchCountry from './list/searchCountry';
 import transformData from './utils/transformData';
 
@@ -12,7 +13,7 @@ const search = document.querySelector('.search');
 let globalData;
 let countriesData;
 let geoJson;
-// set geoJson object for map
+
 function createGeoJson(data) {
   geoJson = {
     features: data.map((info = {}) => {
@@ -43,19 +44,6 @@ function createGeoJson(data) {
   };
   createMap(geoJson);
 }
-// let data;
-// async function getCountriesData() {
-//   let response;
-//   try {
-//     response = await fetch('https://disease.sh/v3/covid-19/countries');
-//     data = await response.json();
-//     createGeoJson(data);
-//   } catch (e) {
-//     throw new Error(`Failed to fetch countries: ${e.message}`, e);
-//   }
-// }
-
-// getCountriesData();
 
 const switchers = document.querySelectorAll('.switcher');
 Array.from(switchers).forEach((switcher) => switcher.addEventListener('click', (e) => {
@@ -112,10 +100,6 @@ arrows.forEach((arrow) => arrow.addEventListener('click', (e) => {
   sliderToDisplay.classList.toggle('visible');
 }));
 
-
-
-
-
 function getGlobalData() {
   fetch('https://disease.sh/v3/covid-19/all')
     .then((response) => response.json())
@@ -133,6 +117,7 @@ function getCountriesData() {
       const countriesDataSort = countriesData.sort((a, b) => b.cases - a.cases);
       const transformedData = transformData(countriesDataSort);
       generateList(transformedData);
+      generateTable(transformedData);
       createGeoJson(countriesData);
     });
 }

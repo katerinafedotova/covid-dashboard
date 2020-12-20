@@ -1,14 +1,9 @@
 import createDomElement from '../utils/createDomElement';
+import cleanContainer from '../utils/cleanContainer';
 
 const casesListContainer = document.querySelector('.cases__by__country-list');
 const categoryName = document.querySelector('.category-name');
 const select = document.querySelector('.select');
-
-function cleanContainer(dataContainer) {
-  while (dataContainer.firstChild) {
-    dataContainer.removeChild(dataContainer.firstChild);
-  }
-}
 
 const propertyPer100kPopulation = (a, b) => {
   if (b === 0) {
