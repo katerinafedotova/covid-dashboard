@@ -92,9 +92,10 @@ body {
     transition: all .3s ease;
 }
 
-/* .country-data-container:hover {
-  transform: scaleY(1.1)
-} */
+.country-data-container:hover,
+.country-data-container_active {
+  background-color: #c6cac9;
+}
 
 .country-data-container_hide {
     display: none;

@@ -138,7 +138,12 @@ select.addEventListener('change', (e) => {
 search.oninput = searchCountry;
 
 countriesListContainer.addEventListener('click', (e) => {
+  const countries = document.querySelectorAll('.country-data-container');
+  countries.forEach((country) => {
+    country.classList.remove('country-data-container_active');
+  });
   const country = e.target.closest('.country-data-container');
+  country.classList.add('country-data-container_active');
   const countryId = country.dataset.id;
   generateTable(transformedData, countryId);
 });
