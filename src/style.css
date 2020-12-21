@@ -84,7 +84,13 @@ body {
     border-bottom: 2px solid black;
     display: flex;
     align-items: center;
+    cursor: pointer;
+    transition: all .3s ease;
 }
+
+/* .country-data-container:hover {
+  transform: scaleY(1.1)
+} */
 
 .country-data-container_hide {
     display: none;
@@ -288,6 +294,24 @@ margin-bottom: 1em;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+}
+
+.country-data__title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.country-info {
+  padding: 3px 0;
+  width: 100%;
+  text-align: left;
+  border-bottom: 2px solid black;
+  display: flex;
+  align-items: center;
+}
+
+.parameter {
+  margin-right: 10px;
 }
 /* third column end */
 
