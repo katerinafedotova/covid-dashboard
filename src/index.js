@@ -2,19 +2,22 @@ import './style.css';
 import createMap from './map/createMap';
 import createDomElement from './utils/createDomElement';
 import generateList from './list/generateList';
+import generateTable from './table/generateTable';
 import searchCountry from './list/searchCountry';
 import transformData from './utils/transformData';
 import createChart from './chart/createChart';
 
 const globalCases = createDomElement('span', 'cases__data', null, document.querySelector('.cases__global'));
+const countriesListContainer = document.querySelector('.cases__by__country-list');
 const select = document.querySelector('.select');
 const search = document.querySelector('.search');
 
 let globalData;
 let countriesData;
 let chartData;
+let transformedData;
 let geoJson;
-// set geoJson object for map
+
 function createGeoJson(data) {
   geoJson = {
     features: data.map((info = {}) => {
@@ -181,8 +184,9 @@ function getCountriesData() {
     .then((respData) => {
       countriesData = respData;
       const countriesDataSort = countriesData.sort((a, b) => b.cases - a.cases);
-      const transformedData = transformData(countriesDataSort);
+      transformedData = transformData(countriesDataSort);
       generateList(transformedData);
+      generateTable(transformedData);
       createGeoJson(countriesData);
     });
 }
@@ -192,13 +196,19 @@ select.addEventListener('change', (e) => {
     if (elem.selected) {
       const targetName = elem.value;
       const targetId = elem.dataset.id;
-      const transformedData = transformData(countriesData);
+      transformedData = transformData(countriesData);
       generateList(transformedData, targetName, targetId);
     }
   });
 });
 
 search.oninput = searchCountry;
+
+countriesListContainer.addEventListener('click', (e) => {
+  const country = e.path.find(((elem) => elem.classList.contains('country-data-container')));
+  const countryId = country.dataset.id;
+  generateTable(transformedData, countryId);
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   getGlobalData();

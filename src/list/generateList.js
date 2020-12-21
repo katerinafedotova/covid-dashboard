@@ -1,14 +1,9 @@
 import createDomElement from '../utils/createDomElement';
+import cleanContainer from '../utils/cleanContainer';
 
 const casesListContainer = document.querySelector('.cases__by__country-list');
 const categoryName = document.querySelector('.category-name');
 const select = document.querySelector('.select');
-
-function cleanContainer(dataContainer) {
-  while (dataContainer.firstChild) {
-    dataContainer.removeChild(dataContainer.firstChild);
-  }
-}
 
 const propertyPer100kPopulation = (a, b) => {
   if (b === 0) {
@@ -35,13 +30,15 @@ export default function generateList(dataJson, targetName, targetId = 0) {
     countriesDataSort = dataJson.sort((a, b) => b.properties[targetId].value
      - a.properties[targetId].value);
   }
-
+  
   countriesDataSort.forEach((countryData) => {
-    const countryDataContainer = createDomElement('div', 'country-data-container', null, casesListContainer);
+    const countryId = countriesDataSort.indexOf(countryData);
+
+    const countryDataContainer = createDomElement('div', 'country-data-container', null, casesListContainer, ['data-id', countryId]);
     const countryCases = createDomElement('span', 'country-cases', null, countryDataContainer);
     const countryName = createDomElement('span', 'country-name', null, countryDataContainer);
     const countryFlag = createDomElement('img', null, null, countryDataContainer, ['src', countryData.flag]);
-
+    
     if (targetId >= 6) {
       const id = targetId - 6;
       countryCases.innerText = propertyPer100kPopulation(countryData.properties[id].value,
