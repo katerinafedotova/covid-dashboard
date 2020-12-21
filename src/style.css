@@ -70,6 +70,10 @@ body {
     font-weight: 700;
 }
 
+.search-country {
+  margin: 7px 0;
+}
+
 .cases__by__country-list {
     max-height: 200px;
     display: flex;
@@ -299,6 +303,9 @@ margin-bottom: 1em;
 .country-data__title {
   font-size: 24px;
   font-weight: 600;
+}
+.country-data__wrapper {
+  display: flex;
 }
 
 .country-info {

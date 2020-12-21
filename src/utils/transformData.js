@@ -23,15 +23,15 @@ export default function transformData(data) {
           value: recovered,
         },
         {
-          name: 'today Cases',
+          name: 'today cases',
           value: todayCases,
         },
         {
-          name: 'today Deaths',
+          name: 'today deaths',
           value: todayDeaths,
         },
         {
-          name: 'today Recovered',
+          name: 'today recovered',
           value: todayRecovered,
         },
       ],

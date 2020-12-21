@@ -138,12 +138,10 @@ select.addEventListener('change', (e) => {
 search.oninput = searchCountry;
 
 countriesListContainer.addEventListener('click', (e) => {
-  let country = e.path.find((elem => {
-    return elem.classList.contains('country-data-container')
-  }))
-  let countryId = country.dataset.id;
-  generateTable(transformedData, countryId)
-})
+  const country = e.target.closest('.country-data-container');
+  const countryId = country.dataset.id;
+  generateTable(transformedData, countryId);
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   getGlobalData();
