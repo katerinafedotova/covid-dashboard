@@ -14,7 +14,7 @@ const statsArray = [
 ];
 const colors = ['#e31a1c', '#a6cee3', '#31a354', '#ca81b2f2', '#1f78b4', '#fb9a99', '#fdbf6f', '#cab2d6', '#ff7f00', '#6a3d9a', '#ffff99', '#FFEB3B'];
 const sizeInEm = [0.7, 1.2, 1.7, 2.2, 2.7, 3.2];
-const labelNames = ['Cases', 'Deaths', 'Recovered', 'Recovered per 100k', 'Cases per Day', 'Deaths per Day', 'Cases per 100k', 'Deaths per 100k', 'Recovered per Day', 'Cases per Day per 100k', 'Deaths per Day per 100k', 'Recovered per Day per 100k'];
+const labelNames = ['Cases', 'Deaths', 'Recovered', 'Cases per Day', 'Deaths per Day', 'Recovered per Day', 'Cases per 100k', 'Deaths per 100k', 'Recovered per 100k', 'Cases per Day per 100k', 'Deaths per Day per 100k', 'Recovered per Day per 100k'];
 
 export {
   statsArray, colors, sizeInEm, labelNames,

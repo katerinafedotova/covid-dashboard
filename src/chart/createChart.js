@@ -3,18 +3,13 @@ import { colors, labelNames } from '../map/constants';
 
 let ctx = document.getElementById('myChart');
 
-export default function createChart(chartData, targetId) {
-  console.log(targetId);
-  if (targetId === undefined) {
-    targetId = 0;
-  } else {
-    const canvasContainer = document.querySelector('.canvas');
-    while (canvasContainer.firstChild) {
-      if (canvasContainer.firstChild !== 'canvas') { canvasContainer.removeChild(canvasContainer.firstChild); }
-    }
-    canvasContainer.innerHTML += '<canvas id="myChart" height="220" width = "320"></canvas>';
-    ctx = document.getElementById('myChart');
+export default function createChart(chartData, targetId = 0) {
+  const canvasContainer = document.querySelector('.canvas');
+  while (canvasContainer.firstChild) {
+    if (canvasContainer.firstChild !== 'canvas') { canvasContainer.removeChild(canvasContainer.firstChild); }
   }
+  canvasContainer.innerHTML += '<canvas id="myChart" height="220" width = "320"></canvas>';
+  ctx = document.getElementById('myChart');
   const updateData = [];
   const casesData = [];
   const deathsData = [];
@@ -23,48 +18,52 @@ export default function createChart(chartData, targetId) {
   const deathsPerDay = [];
   const recoveredPerDay = [];
   const population = 7800000000;
-
-  chartData.reverse().map((el) => updateData.push(el.last_update.substr(0,
+  chartData.map((el) => updateData.push(el.last_update.substr(0,
     el.last_update.length - 9)));
+  console.log(chartData);
+
   chartData.map((el) => casesData.push(el.total_cases));
   chartData.map((el) => deathsData.push(el.total_deaths));
   chartData.map((el) => recoveredData.push(el.total_recovered));
+  console.log(casesData);
 
-  for (let i = 0; i < casesData.length; i += 1) {
+  let casesDataToReverse = casesData.slice();
+  casesDataToReverse = casesDataToReverse.reverse();
+  let deathsDataToReverse = deathsData.slice();
+  deathsDataToReverse = deathsDataToReverse.reverse();
+  let recoveredDataToReverse = recoveredData.slice();
+  recoveredDataToReverse = recoveredDataToReverse.reverse();
+  console.log(casesDataToReverse);
+  for (let i = 0; i < casesDataToReverse.length; i += 1) {
     if (i === 0) {
-      casesPerDay.push(casesData[i]);
+      casesPerDay.push(casesDataToReverse[i]);
+      deathsPerDay.push(deathsDataToReverse[i]);
+      recoveredPerDay.push(recoveredDataToReverse[i]);
     } else {
-      const difference = casesData[i] - casesData[i - 1];
-      casesPerDay.push(difference);
+      const caseDifference = casesDataToReverse[i] - casesDataToReverse[i - 1];
+      casesPerDay.push(caseDifference);
+      const deathsDifference = deathsDataToReverse[i] - deathsDataToReverse[i - 1];
+      deathsPerDay.push(deathsDifference);
+      const recoveredDifference = recoveredDataToReverse[i] - recoveredDataToReverse[i - 1];
+      recoveredPerDay.push(recoveredDifference);
     }
   }
+  casesPerDay.reverse();
+  deathsPerDay.reverse();
+  recoveredPerDay.reverse();
 
-  for (let i = 0; i < deathsData.length; i += 1) {
-    if (i === 0) {
-      deathsPerDay.push(deathsData[i]);
-    } else {
-      const difference = deathsData[i] - deathsData[i - 1];
-      deathsPerDay.push(difference);
-    }
-  }
-
-  for (let i = 0; i < recoveredData.length; i += 1) {
-    if (i === 0) {
-      recoveredPerDay.push(recoveredData[i]);
-    } else {
-      const difference = recoveredData[i] - recoveredData[i - 1];
-      recoveredPerDay.push(difference);
-    }
-  }
-  // console.log()
-  console.log(casesPerDay);
   const casesPer100kData = casesData.map((el) => ((el / population) * 100000).toFixed(2));
   const deathsPer100kData = deathsData.map((el) => ((el / population) * 100000).toFixed(2));
   const recoveredPer100kData = recoveredData.map((el) => ((el / population) * 100000).toFixed(2));
+  const casesPerDayPer100kData = casesPerDay.map((el) => ((el / population) * 100000).toFixed(2));
+  const deathsPerDayPer100kData = deathsPerDay.map((el) => ((el / population) * 100000).toFixed(2));
+  const recoveredPerDayPer100kData = recoveredPerDay.map((el) => ((el / population)
+   * 100000).toFixed(2));
 
   const statisticsArr = [casesData, deathsData, recoveredData,
     casesPerDay, deathsPerDay, recoveredPerDay,
-    casesPer100kData, deathsPer100kData, recoveredPer100kData];
+    casesPer100kData, deathsPer100kData, recoveredPer100kData,
+    casesPerDayPer100kData, deathsPerDayPer100kData, recoveredPerDayPer100kData];
 
   const baseData = {
     labels: updateData,

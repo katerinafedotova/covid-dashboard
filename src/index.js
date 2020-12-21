@@ -111,6 +111,8 @@ Array.from(chartSwitchers).forEach((switcher) => switcher.addEventListener('clic
   const target = e.target.closest('.switcher__chart');
   const targetId = target.dataset.chart;
   target.classList.add('active');
+  console.log(chartData);
+
   createChart(chartData, targetId);
 }));
 
