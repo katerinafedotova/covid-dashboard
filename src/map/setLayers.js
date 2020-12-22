@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { statsArray, colors, sizeInEm } from './constants';
+import { statsArray, colors, sizeInEm } from '../constants/constants';
 import aspectRatioImg from '../assets/aspect_ratio-24px.svg';
 
 let geoJsonLayers;

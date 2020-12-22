@@ -1,11 +1,13 @@
 import './style.css';
 import createMap from './map/createMap';
+import updateSwitchers from './map/updateSwitchers';
 import createDomElement from './utils/createDomElement';
 import generateList from './list/generateList';
 import generateTable from './table/generateTable';
 import searchCountry from './list/searchCountry';
 import transformData from './utils/transformData';
 import createChart from './chart/createChart';
+import updateChartSwitchers from './chart/updateChartSwitchers';
 import getChartDataPerCountry from './chart/createCountryChart';
 
 const globalCases = createDomElement('span', 'cases__data', null, document.querySelector('.cases__global'));
@@ -50,7 +52,7 @@ function createGeoJson(data) {
   };
   createMap(geoJson);
 }
-
+// set event listeners for map
 const switchers = document.querySelectorAll('.switcher');
 Array.from(switchers).forEach((switcher) => switcher.addEventListener('click', (e) => {
   for (let i = 0; i < switchers.length; i += 1) {
@@ -65,47 +67,10 @@ Array.from(switchers).forEach((switcher) => switcher.addEventListener('click', (
   createMap(geoJson, targetId, targetNum);
 }));
 
-// set event listeners for arrows
 const arrows = Array.from([document.querySelector('.left'), document.querySelector('.right')]);
-arrows.forEach((arrow) => arrow.addEventListener('click', (e) => {
-  // check which arrow clicked
-  let currentArrow = e.target;
-  if (currentArrow.classList.contains('right')) {
-    currentArrow = 'right';
-  } else {
-    currentArrow = 'left';
-  }
-  let currentNum;
-  // find the slider we want to hide
-  Array.from(document.querySelectorAll('.switchers__slider')).forEach((slider) => {
-    if (slider.classList.contains('visible')) {
-      currentNum = slider.dataset.slidernum;
-      if (+currentNum === 4 && currentArrow === 'right') {
-        document.querySelector(`[data-slidernum='${currentNum}']`).classList.toggle('visible');
-        currentNum = 1;
-      }
-      if (+currentNum === 1 && currentArrow === 'left') {
-        document.querySelector(`[data-slidernum='${currentNum}']`).classList.toggle('visible');
-        currentNum = 4;
-      }
-    }
-  });
-  const sliderToHide = document.querySelector(`[data-slidernum='${currentNum}']`);
-  let sliderToDisplay;
+arrows.forEach((arrow) => arrow.addEventListener('click', (e) => updateSwitchers(e)));
 
-  if (currentArrow === 'right' && sliderToHide.classList.contains('visible')) {
-    sliderToDisplay = document.querySelector(`[data-slidernum='${+currentNum + 1}']`);
-    sliderToHide.classList.toggle('visible');
-  } else if (currentArrow === 'left' && sliderToHide.classList.contains('visible')) {
-    sliderToDisplay = document.querySelector(`[data-slidernum='${+currentNum - 1}']`);
-    sliderToHide.classList.toggle('visible');
-  } else {
-    sliderToDisplay = sliderToHide;
-  }
-
-  sliderToDisplay.classList.toggle('visible');
-}));
-// chart
+// set event listeners for chart
 const chartSwitchers = document.querySelectorAll('.switcher__chart');
 Array.from(chartSwitchers).forEach((switcher) => switcher.addEventListener('click', (e) => {
   for (let i = 0; i < chartSwitchers.length; i += 1) {
@@ -127,46 +92,9 @@ Array.from(chartSwitchers).forEach((switcher) => switcher.addEventListener('clic
 }));
 
 const chartArrows = Array.from([document.querySelector('.chart__left'), document.querySelector('.chart__right')]);
-chartArrows.forEach((arrow) => arrow.addEventListener('click', (e) => {
-  // check which arrow clicked
-  let currentArrow = e.target;
-  if (currentArrow.classList.contains('chart__right')) {
-    currentArrow = 'right';
-  } else {
-    currentArrow = 'left';
-  }
-  let currentNum;
-  // find the slider we want to hide
-  Array.from(document.querySelectorAll('.switchers__slider__chart')).forEach((slider) => {
-    if (slider.classList.contains('visible')) {
-      currentNum = slider.dataset.chartnum;
-      if (+currentNum === 4 && currentArrow === 'right') {
-        document.querySelector(`[data-chartnum='${currentNum}']`).classList.toggle('visible');
-        currentNum = 1;
-      }
-      if (+currentNum === 1 && currentArrow === 'left') {
-        document.querySelector(`[data-chartnum='${currentNum}']`).classList.toggle('visible');
-        currentNum = 4;
-      }
-    }
-  });
-  const sliderToHide = document.querySelector(`[data-chartnum='${currentNum}']`);
-  console.log(sliderToHide);
-  let sliderToDisplay;
+chartArrows.forEach((arrow) => arrow.addEventListener('click', (e) => updateChartSwitchers(e)));
 
-  if (currentArrow === 'right' && sliderToHide.classList.contains('visible')) {
-    sliderToDisplay = document.querySelector(`[data-chartnum='${+currentNum + 1}']`);
-    sliderToHide.classList.toggle('visible');
-  } else if (currentArrow === 'left' && sliderToHide.classList.contains('visible')) {
-    sliderToDisplay = document.querySelector(`[data-chartnum='${+currentNum - 1}']`);
-    sliderToHide.classList.toggle('visible');
-  } else {
-    sliderToDisplay = sliderToHide;
-  }
-
-  sliderToDisplay.classList.toggle('visible');
-}));
-
+// accumulate data from API
 function getChartData() {
   fetch('https://covid19-api.org/api/timeline')
     .then((response) => response.json())

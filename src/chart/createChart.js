@@ -1,5 +1,5 @@
 import Chart from 'chart.js';
-import { colors, labelNames } from '../map/constants';
+import { colors, labelNames } from '../constants/constants';
 
 let ctx = document.getElementById('myChart');
 
@@ -94,7 +94,7 @@ export default function createChart(chartData, targetId = 0) {
   };
 
   const lineChart = new Chart(ctx, {
-    type: 'line',
+    type: 'bar',
     data: baseData,
     options: chartOptions,
   });

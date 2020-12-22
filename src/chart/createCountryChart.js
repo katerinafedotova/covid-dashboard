@@ -1,5 +1,5 @@
 import Chart from 'chart.js';
-import { colors, labelNames } from '../map/constants';
+import { colors, labelNames } from '../constants/constants';
 
 let ctx = document.getElementById('myChart');
 function clearChart() {
@@ -11,9 +11,15 @@ function clearChart() {
 }
 
 function createCountryChart(chartData, countryPopulation, targetId = 0) {
-  console.log(countryPopulation);
-  console.log(chartData);
   clearChart();
+  const chartSwitchers = document.querySelectorAll('.switcher__chart');
+  for (let i = 0; i < chartSwitchers.length; i += 1) {
+    if (chartSwitchers[i].classList.contains('active')) {
+      chartSwitchers[i].classList.remove('active');
+    }
+  }
+  chartSwitchers[targetId].classList.add('active');
+
   ctx = document.getElementById('myChart');
   const casesPerDay = [];
   const deathsPerDay = [];
@@ -79,6 +85,8 @@ function createCountryChart(chartData, countryPopulation, targetId = 0) {
         fontColor: 'black',
       },
     },
+    // responsive: true,
+    // maintainAspectRatio: false,
     scales: {
       xAxes: [{
         type: 'time',
@@ -93,7 +101,7 @@ function createCountryChart(chartData, countryPopulation, targetId = 0) {
   };
 
   const lineChart = new Chart(ctx, {
-    type: 'line',
+    type: 'bar',
     data: baseData,
     options: chartOptions,
   });
