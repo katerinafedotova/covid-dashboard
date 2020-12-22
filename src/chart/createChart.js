@@ -20,12 +20,10 @@ export default function createChart(chartData, targetId = 0) {
   const population = 7800000000;
   chartData.map((el) => updateData.push(el.last_update.substr(0,
     el.last_update.length - 9)));
-  console.log(chartData);
 
   chartData.map((el) => casesData.push(el.total_cases));
   chartData.map((el) => deathsData.push(el.total_deaths));
   chartData.map((el) => recoveredData.push(el.total_recovered));
-  console.log(casesData);
 
   let casesDataToReverse = casesData.slice();
   casesDataToReverse = casesDataToReverse.reverse();
@@ -33,7 +31,6 @@ export default function createChart(chartData, targetId = 0) {
   deathsDataToReverse = deathsDataToReverse.reverse();
   let recoveredDataToReverse = recoveredData.slice();
   recoveredDataToReverse = recoveredDataToReverse.reverse();
-  console.log(casesDataToReverse);
   for (let i = 0; i < casesDataToReverse.length; i += 1) {
     if (i === 0) {
       casesPerDay.push(casesDataToReverse[i]);
