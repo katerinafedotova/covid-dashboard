@@ -1,15 +1,15 @@
 import './style.css';
 import createMap from './map/createMap';
-import createDomElement from './utils/createDomElement';
 import generateList from './list/generateList';
 import generateTable from './table/generateTable';
+import generateGlobalData from './globalData/generateGlobalData';
 import searchCountry from './list/searchCountry';
 import transformData from './utils/transformData';
 
-const globalCases = createDomElement('span', 'cases__data', null, document.querySelector('.cases__global'));
 const countriesListContainer = document.querySelector('.cases__by__country-list');
 const select = document.querySelector('.select');
 const search = document.querySelector('.search');
+const globalArrows = document.querySelectorAll('.global-arrow');
 
 let globalData;
 let countriesData;
@@ -107,7 +107,7 @@ function getGlobalData() {
     .then((response) => response.json())
     .then((resp) => {
       globalData = resp;
-      globalCases.innerText = globalData.cases;
+      generateGlobalData(globalData);
     });
 }
 
@@ -142,10 +142,34 @@ countriesListContainer.addEventListener('click', (e) => {
   countries.forEach((country) => {
     country.classList.remove('country-data-container_active');
   });
+
   const country = e.target.closest('.country-data-container');
   country.classList.add('country-data-container_active');
   const countryId = country.dataset.id;
   generateTable(transformedData, countryId);
+});
+
+let currentGlobalDataId = 0;
+globalArrows.forEach((arrow) => {
+  arrow.addEventListener('click', (e) => {
+    let currentArrow = e.target;
+    if (currentArrow.classList.contains('right')) {
+      currentArrow = 'right';
+      if (currentGlobalDataId === 11) {
+        currentGlobalDataId = 0;
+      } else {
+        currentGlobalDataId += 1;
+      }
+    } else {
+      currentArrow = 'left';
+      if (currentGlobalDataId === 0) {
+        currentGlobalDataId = 11;
+      } else {
+        currentGlobalDataId -= 1;
+      }
+    }
+    generateGlobalData(globalData, currentGlobalDataId);
+  });
 });
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -55,12 +55,33 @@ body {
 }
 .first__column__content{
     display: flex;
-    flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
 
-.cases__data {
+.global-arrow {
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 50%;
+  font-size: 1.2em;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition: all .2s ease;
+}
+
+.global-arrow:hover{
+  background: rgb(211, 208, 208);
+  transform: scale(1.2);
+}
+
+.global__title {
+  font-weight: 700;
+}
+
+.global__data {
     color: red;
     font-weight: 700;
     font-size: 32px;
