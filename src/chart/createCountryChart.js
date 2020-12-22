@@ -24,48 +24,47 @@ function createCountryChart(chartData, countryPopulation, targetId = 0) {
   const deathsData = Object.values(chartData.timeline.deaths);
   const recoveredData = Object.values(chartData.timeline.recovered);
 
-  //   let casesDataToReverse = casesData.slice();
+  //   const casesDataToReverse = casesData.slice();
   //   casesDataToReverse = casesDataToReverse.reverse();
   //   let deathsDataToReverse = deathsData.slice();
   //   deathsDataToReverse = deathsDataToReverse.reverse();
   //   let recoveredDataToReverse = recoveredData.slice();
   //   recoveredDataToReverse = recoveredDataToReverse.reverse();
-  //   for (let i = 0; i < casesDataToReverse.length; i += 1) {
-  //     if (i === 0) {
-  //       casesPerDay.push(casesDataToReverse[i]);
-  //       deathsPerDay.push(deathsDataToReverse[i]);
-  //       recoveredPerDay.push(recoveredDataToReverse[i]);
-  //     } else {
-  //       const caseDifference = casesDataToReverse[i] - casesDataToReverse[i - 1];
-  //       casesPerDay.push(caseDifference);
-  //       const deathsDifference = deathsDataToReverse[i] - deathsDataToReverse[i - 1];
-  //       deathsPerDay.push(deathsDifference);
-  //       const recoveredDifference = recoveredDataToReverse[i] - recoveredDataToReverse[i - 1];
-  //       recoveredPerDay.push(recoveredDifference);
-  //     }
-  //   }
-  //   casesPerDay.reverse();
-  //   deathsPerDay.reverse();
-  //   recoveredPerDay.reverse();
+  for (let i = 0; i < casesData.length; i += 1) {
+    if (i === 0) {
+      casesPerDay.push(casesData[i]);
+      deathsPerDay.push(deathsData[i]);
+      recoveredPerDay.push(recoveredData[i]);
+    } else {
+      const caseDifference = casesData[i] - casesData[i - 1];
+      casesPerDay.push(caseDifference);
+      const deathsDifference = deathsData[i] - deathsData[i - 1];
+      deathsPerDay.push(deathsDifference);
+      const recoveredDifference = recoveredData[i] - recoveredData[i - 1];
+      recoveredPerDay.push(recoveredDifference);
+    }
+  }
 
-  //   const casesPer100kData = casesData.map((el) => ((el / population) * 100000).toFixed(2));
-  //   const deathsPer100kData = deathsData.map((el) => ((el / population) * 100000).toFixed(2));
-  //   const recoveredPer100kData = recoveredData.map((el) => ((el / population) * 100000).toFixed(2));
-  //   const casesPerDayPer100kData = casesPerDay.map((el) => ((el / population) * 100000).toFixed(2));
-  //   const deathsPerDayPer100kData = deathsPerDay.map((el) => ((el / population) * 100000).toFixed(2));
-  //   const recoveredPerDayPer100kData = recoveredPerDay.map((el) => ((el / population)
-  //    * 100000).toFixed(2));
+  const casesPer100kData = casesData.map((el) => ((el / countryPopulation) * 100000).toFixed(2));
+  const deathsPer100kData = deathsData.map((el) => ((el / countryPopulation) * 100000).toFixed(2));
+  const recoveredPer100kData = recoveredData.map((el) => ((el / countryPopulation)
+  * 100000).toFixed(2));
+  const casesPerDayPer100kData = casesPerDay.map((el) => ((el / countryPopulation)
+  * 100000).toFixed(2));
+  const deathsPerDayPer100kData = deathsPerDay.map((el) => ((el / countryPopulation)
+  * 100000).toFixed(2));
+  const recoveredPerDayPer100kData = recoveredPerDay.map((el) => ((el / countryPopulation)
+     * 100000).toFixed(2));
 
-  const statisticsArr = [casesData, deathsData, recoveredData];
-  //   casesPerDay, deathsPerDay, recoveredPerDay,
-  //   casesPer100kData, deathsPer100kData, recoveredPer100kData,
-  //   casesPerDayPer100kData, deathsPerDayPer100kData, recoveredPerDayPer100kData];
+  const statisticsArr = [casesData, deathsData, recoveredData,
+    casesPerDay, deathsPerDay, recoveredPerDay,
+    casesPer100kData, deathsPer100kData, recoveredPer100kData,
+    casesPerDayPer100kData, deathsPerDayPer100kData, recoveredPerDayPer100kData];
 
   const baseData = {
     labels: updateData,
     datasets: [{
       label: labelNames[targetId],
-      //   data: casesData,
       data: statisticsArr[targetId],
       backgroundColor: colors[targetId],
     }],
