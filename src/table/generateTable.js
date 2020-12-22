@@ -13,11 +13,12 @@ export default function generateTable(data, countryId) {
     countryName = data[countryId].country;
     const countryPopulation = data[countryId].population;
     getChartDataPerCountry(countryName, countryPopulation);
+    localStorage.setItem('chosenCountryForChart', countryName);
+    localStorage.setItem('chosenCountryPopulationForChart', countryPopulation);
   } else {
     countryId = 0;
   }
   countryName = data[countryId].country;
-  //   const countryName = data[countryId].country;
   countryTitle.innerText = `cases in ${countryName}`;
 
   data[countryId].properties.forEach((parameter) => {

@@ -6,6 +6,7 @@ import generateTable from './table/generateTable';
 import searchCountry from './list/searchCountry';
 import transformData from './utils/transformData';
 import createChart from './chart/createChart';
+import getChartDataPerCountry from './chart/createCountryChart';
 
 const globalCases = createDomElement('span', 'cases__data', null, document.querySelector('.cases__global'));
 const countriesListContainer = document.querySelector('.cases__by__country-list');
@@ -17,6 +18,7 @@ let countriesData;
 let chartData;
 let transformedData;
 let geoJson;
+localStorage.clear();
 
 function createGeoJson(data) {
   geoJson = {
@@ -115,8 +117,13 @@ Array.from(chartSwitchers).forEach((switcher) => switcher.addEventListener('clic
   const targetId = target.dataset.chart;
   target.classList.add('active');
   console.log(chartData);
-
-  createChart(chartData, targetId);
+  const countryName = localStorage.getItem('chosenCountryForChart');
+  const countryPopulation = localStorage.getItem('chosenCountryPopulationForChart');
+  if (countryName === null) {
+    createChart(chartData, targetId);
+  } else {
+    getChartDataPerCountry(countryName, countryPopulation, targetId);
+  }
 }));
 
 const chartArrows = Array.from([document.querySelector('.chart__left'), document.querySelector('.chart__right')]);

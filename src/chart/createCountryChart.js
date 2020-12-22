@@ -2,32 +2,27 @@ import Chart from 'chart.js';
 import { colors, labelNames } from '../map/constants';
 
 let ctx = document.getElementById('myChart');
-
-function createCountryChart(chartData, countryPopulation, targetId = 0) {
-  console.log(countryPopulation);
-  console.log(chartData);
+function clearChart() {
   const canvasContainer = document.querySelector('.canvas');
   while (canvasContainer.firstChild) {
     if (canvasContainer.firstChild !== 'canvas') { canvasContainer.removeChild(canvasContainer.firstChild); }
   }
   canvasContainer.innerHTML += '<canvas id="myChart" height="220" width = "320"></canvas>';
+}
+
+function createCountryChart(chartData, countryPopulation, targetId = 0) {
+  console.log(countryPopulation);
+  console.log(chartData);
+  clearChart();
   ctx = document.getElementById('myChart');
-  //   const updateData = [];
-  //   const casesData = [];
-  const deathsData = [];
-  const recoveredData = [];
   const casesPerDay = [];
   const deathsPerDay = [];
   const recoveredPerDay = [];
   const updateData = Object.keys(chartData.timeline.cases);
   const casesData = Object.values(chartData.timeline.cases);
   console.log(updateData);
-  // chartData.map((el) => updateData.push(el.last_update.substr(0,
-  //   el.last_update.length - 9)));
-
-  //   chartData.map((el) => casesData.push(el.total_cases));
-  //   chartData.map((el) => deathsData.push(el.total_deaths));
-  //   chartData.map((el) => recoveredData.push(el.total_recovered));
+  const deathsData = Object.values(chartData.timeline.deaths);
+  const recoveredData = Object.values(chartData.timeline.recovered);
 
   //   let casesDataToReverse = casesData.slice();
   //   casesDataToReverse = casesDataToReverse.reverse();
@@ -61,7 +56,7 @@ function createCountryChart(chartData, countryPopulation, targetId = 0) {
   //   const recoveredPerDayPer100kData = recoveredPerDay.map((el) => ((el / population)
   //    * 100000).toFixed(2));
 
-  // const statisticsArr = [casesData, deathsData, recoveredData,
+  const statisticsArr = [casesData, deathsData, recoveredData];
   //   casesPerDay, deathsPerDay, recoveredPerDay,
   //   casesPer100kData, deathsPer100kData, recoveredPer100kData,
   //   casesPerDayPer100kData, deathsPerDayPer100kData, recoveredPerDayPer100kData];
@@ -70,8 +65,8 @@ function createCountryChart(chartData, countryPopulation, targetId = 0) {
     labels: updateData,
     datasets: [{
       label: labelNames[targetId],
-      data: casesData,
-      //   data: statisticsArr[targetId],
+      //   data: casesData,
+      data: statisticsArr[targetId],
       backgroundColor: colors[targetId],
     }],
   };
@@ -112,13 +107,14 @@ function getDatesDifference() {
   return Math.round(days);
 }
 
-export default async function getChartDataPerCountry(countryName, countryPopulation) {
+export default async function getChartDataPerCountry(countryName, countryPopulation, targetId) {
   const difference = getDatesDifference();
   const url = `https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=${difference}`;
   fetch(url)
     .then((response) => response.json())
+    .catch((e) => console.log(e.message))
     .then((resp) => {
       const chartData = resp;
-      createCountryChart(chartData, countryPopulation);
+      createCountryChart(chartData, countryPopulation, targetId);
     });
 }
