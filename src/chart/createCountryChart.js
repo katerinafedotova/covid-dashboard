@@ -10,8 +10,7 @@ function clearChart() {
   canvasContainer.innerHTML += '<canvas id="myChart" height="220" width = "320"></canvas>';
 }
 
-function createCountryChart(chartData, countryPopulation, targetId = 0) {
-  clearChart();
+function addDefaultClassActive(targetId) {
   const chartSwitchers = document.querySelectorAll('.switcher__chart');
   for (let i = 0; i < chartSwitchers.length; i += 1) {
     if (chartSwitchers[i].classList.contains('active')) {
@@ -19,6 +18,10 @@ function createCountryChart(chartData, countryPopulation, targetId = 0) {
     }
   }
   chartSwitchers[targetId].classList.add('active');
+}
+function createCountryChart(chartData, countryPopulation, targetId = 0) {
+  clearChart();
+  addDefaultClassActive(targetId);
 
   ctx = document.getElementById('myChart');
   const casesPerDay = [];
@@ -30,12 +33,6 @@ function createCountryChart(chartData, countryPopulation, targetId = 0) {
   const deathsData = Object.values(chartData.timeline.deaths);
   const recoveredData = Object.values(chartData.timeline.recovered);
 
-  //   const casesDataToReverse = casesData.slice();
-  //   casesDataToReverse = casesDataToReverse.reverse();
-  //   let deathsDataToReverse = deathsData.slice();
-  //   deathsDataToReverse = deathsDataToReverse.reverse();
-  //   let recoveredDataToReverse = recoveredData.slice();
-  //   recoveredDataToReverse = recoveredDataToReverse.reverse();
   for (let i = 0; i < casesData.length; i += 1) {
     if (i === 0) {
       casesPerDay.push(casesData[i]);
@@ -114,14 +111,21 @@ function getDatesDifference() {
   return Math.round(days);
 }
 
+function setErrorScreen() {
+  const canvas = document.getElementById('myCanvas');
+  const context = ctx.getContext('2d');
+  context.font = '16px Verdana';
+  context.fillText('No data available for this country', 20, 120);
+}
 export default async function getChartDataPerCountry(countryName, countryPopulation, targetId) {
   const difference = getDatesDifference();
   const url = `https://disease.sh/v3/covid-19/historical/${countryName}?lastdays=${difference}`;
-  fetch(url)
-    .then((response) => response.json())
-    .catch((e) => console.log(e.message))
-    .then((resp) => {
-      const chartData = resp;
-      createCountryChart(chartData, countryPopulation, targetId);
-    });
+  try {
+    const response = await fetch(url);
+    const resp = await response.json();
+    const chartData = resp;
+    createCountryChart(chartData, countryPopulation, targetId);
+  } catch (error) {
+    setErrorScreen();
+  }
 }
