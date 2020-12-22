@@ -1,16 +1,10 @@
 import createDomElement from '../utils/createDomElement';
 import cleanContainer from '../utils/cleanContainer';
+import propertyPer100kPopulation from '../utils/propertyPer100KPopulation';
 
 const casesListContainer = document.querySelector('.cases__by__country-list');
 const categoryName = document.querySelector('.category-name');
 const select = document.querySelector('.select');
-
-const propertyPer100kPopulation = (a, b) => {
-  if (b === 0) {
-    return 0;
-  }
-  return ((a / b) * 100000).toFixed(1);
-};
 
 export default function generateList(dataJson, targetName, targetId = 0) {
   cleanContainer(casesListContainer);

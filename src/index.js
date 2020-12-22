@@ -1,19 +1,20 @@
 import './style.css';
 import createMap from './map/createMap';
 import updateSwitchers from './map/updateSwitchers';
-import createDomElement from './utils/createDomElement';
+// import createDomElement from './utils/createDomElement';
 import generateList from './list/generateList';
 import generateTable from './table/generateTable';
+import generateGlobalData from './globalData/generateGlobalData';
 import searchCountry from './list/searchCountry';
 import transformData from './utils/transformData';
 import createChart from './chart/createChart';
 import updateChartSwitchers from './chart/updateChartSwitchers';
 import getChartDataPerCountry from './chart/createCountryChart';
 
-const globalCases = createDomElement('span', 'cases__data', null, document.querySelector('.cases__global'));
 const countriesListContainer = document.querySelector('.cases__by__country-list');
 const select = document.querySelector('.select');
 const search = document.querySelector('.search');
+const globalArrows = document.querySelectorAll('.global-arrow');
 
 let globalData;
 let countriesData;
@@ -67,7 +68,7 @@ Array.from(switchers).forEach((switcher) => switcher.addEventListener('click', (
   createMap(geoJson, targetId, targetNum);
 }));
 
-const arrows = Array.from([document.querySelector('.left'), document.querySelector('.right')]);
+const arrows = Array.from([document.querySelector('.map__left'), document.querySelector('.map__right')]);
 arrows.forEach((arrow) => arrow.addEventListener('click', (e) => updateSwitchers(e)));
 
 // set event listeners for chart
@@ -109,7 +110,7 @@ function getGlobalData() {
     .then((response) => response.json())
     .then((resp) => {
       globalData = resp;
-      globalCases.innerText = globalData.cases;
+      generateGlobalData(globalData);
     });
 }
 
@@ -140,9 +141,38 @@ select.addEventListener('change', (e) => {
 search.oninput = searchCountry;
 
 countriesListContainer.addEventListener('click', (e) => {
-  const country = e.path.find(((elem) => elem.classList.contains('country-data-container')));
+  const countries = document.querySelectorAll('.country-data-container');
+  countries.forEach((country) => {
+    country.classList.remove('country-data-container_active');
+  });
+
+  const country = e.target.closest('.country-data-container');
+  country.classList.add('country-data-container_active');
   const countryId = country.dataset.id;
   generateTable(transformedData, countryId);
+});
+
+let currentGlobalDataId = 0;
+globalArrows.forEach((arrow) => {
+  arrow.addEventListener('click', (e) => {
+    let currentArrow = e.target;
+    if (currentArrow.classList.contains('right')) {
+      currentArrow = 'right';
+      if (currentGlobalDataId === 11) {
+        currentGlobalDataId = 0;
+      } else {
+        currentGlobalDataId += 1;
+      }
+    } else {
+      currentArrow = 'left';
+      if (currentGlobalDataId === 0) {
+        currentGlobalDataId = 11;
+      } else {
+        currentGlobalDataId -= 1;
+      }
+    }
+    generateGlobalData(globalData, currentGlobalDataId);
+  });
 });
 
 document.addEventListener('DOMContentLoaded', () => {

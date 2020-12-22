@@ -1,14 +1,10 @@
-export default function transformData(data) {
-  return data.map((info = {}) => {
+export default function transformGlobalData(data) {
+  return Object.keys(data).map((info = []) => {
     const {
-      country, cases, deaths, recovered, todayCases, todayDeaths, todayRecovered, population,
+      cases, deaths, recovered, todayCases, todayDeaths, todayRecovered, population,
     } = info;
-    const { countryInfo = {} } = info;
-    const { flag } = countryInfo;
     return {
-      country,
       population,
-      flag,
       properties: [
         {
           name: 'cases',
