@@ -1,7 +1,6 @@
 import './style.css';
 import createMap from './map/createMap';
 import updateSwitchers from './map/updateSwitchers';
-// import createDomElement from './utils/createDomElement';
 import generateList from './list/generateList';
 import generateTable from './table/generateTable';
 import generateGlobalData from './globalData/generateGlobalData';
@@ -23,7 +22,7 @@ let transformedData;
 let geoJson;
 localStorage.clear();
 
-function createGeoJson(data) {
+const createGeoJson = (data) => {
   geoJson = {
     features: data.map((info = {}) => {
       const {
@@ -52,7 +51,7 @@ function createGeoJson(data) {
     }),
   };
   createMap(geoJson);
-}
+};
 // set event listeners for map
 const switchers = document.querySelectorAll('.switcher');
 Array.from(switchers).forEach((switcher) => switcher.addEventListener('click', (e) => {
@@ -82,7 +81,6 @@ Array.from(chartSwitchers).forEach((switcher) => switcher.addEventListener('clic
   const target = e.target.closest('.switcher__chart');
   const targetId = target.dataset.chart;
   target.classList.add('active');
-  console.log(chartData);
   const countryName = localStorage.getItem('chosenCountryForChart');
   const countryPopulation = localStorage.getItem('chosenCountryPopulationForChart');
   if (countryName === null) {
@@ -96,25 +94,25 @@ const chartArrows = Array.from([document.querySelector('.chart__left'), document
 chartArrows.forEach((arrow) => arrow.addEventListener('click', (e) => updateChartSwitchers(e)));
 
 // accumulate data from API
-function getChartData() {
+const getChartData = () => {
   fetch('https://covid19-api.org/api/timeline')
     .then((response) => response.json())
     .then((resp) => {
       chartData = resp;
       createChart(chartData);
     });
-}
+};
 
-function getGlobalData() {
+const getGlobalData = () => {
   fetch('https://disease.sh/v3/covid-19/all')
     .then((response) => response.json())
     .then((resp) => {
       globalData = resp;
       generateGlobalData(globalData);
     });
-}
+};
 
-function getCountriesData() {
+const getCountriesData = () => {
   fetch('https://disease.sh/v3/covid-19/countries')
     .then((response) => response.json())
     .then((respData) => {
@@ -125,7 +123,7 @@ function getCountriesData() {
       generateTable(transformedData);
       createGeoJson(countriesData);
     });
-}
+};
 
 select.addEventListener('change', (e) => {
   [...e.srcElement.options].forEach((elem) => {
