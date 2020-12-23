@@ -72,6 +72,8 @@ export default function createChart(chartData, targetId = 0) {
   };
 
   const chartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
     legend: {
       display: true,
       position: 'top',

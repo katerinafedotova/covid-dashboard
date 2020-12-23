@@ -9,12 +9,14 @@ body {
 /* header start */
 .header{
     width:100%;
-    height:70px;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-bottom: 5px solid #84022e;
 }
 .header__content{
     max-width: 1300px;
-    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,8 +32,8 @@ body {
 
 /* main start*/
 .main{
-    margin: 10px;
-    height: calc(100vh - 145px);
+    height: 83vh;
+    padding: 10px;
 }
 .container{
     display: flex;
@@ -39,27 +41,33 @@ body {
     text-align: center;
     flex-wrap:wrap;
     max-width: 1300px;
+    height: calc(100vh - 145px);
     margin: 0 auto;
 }
 .first__column, .second__column, .third__column{
     border: 2px black solid;
-    padding: 8px;
     border-collapse: collapse;
-}
-.first__column__content, .second__column__content, .third__column__content{
     padding: 3px;
 }
 
 /* first column start */
 .first__column{
-    flex-basis: 20%;
+    flex-basis: 22%;
+    min-width: 22%;
 }
 .first__column__content{
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
-
+.global__info{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 3px;
+}
 .global-arrow {
   width: 28px;
   height: 28px;
@@ -85,7 +93,7 @@ body {
 .global__data {
     color: red;
     font-weight: 700;
-    font-size: 32px;
+    font-size: 1.4em;
 }
 
 .category-name {
@@ -148,8 +156,24 @@ mark {
 
 /* second column start */
 .second__column{
-    flex-basis: 50%;
-    margin:0 auto;
+    flex-basis: 45%;
+    min-width: 45%;
+}
+.second__column__content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  border-radius: 10px;
+  border: 2px solid black;
+  background: #d0cdcd;
+}
+.content__container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 10px 10px 5px 10px;
 }
 #mapid { 
     height: 400px; 
@@ -223,11 +247,11 @@ margin-bottom: 1em;
   margin: .6em 0 0;
 }
 .switchers, .switchers__chart{
+  width: 100%;
   margin:0 auto;
   margin-top: 10px;
   max-width: 400px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
 }
@@ -238,8 +262,8 @@ margin-bottom: 1em;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5px;
-  padding: 5px;
+  margin: 3px;
+  padding: 2px;
   height: 43px;
   width:65px;
   background: #3e3131;
@@ -249,22 +273,22 @@ margin-bottom: 1em;
   cursor:pointer;
 }
 .switcher:hover, .switcher.active, .switcher__chart:hover, .switcher__chart.active{
-  transform: scale(1.1);
   box-shadow: 1px 1px 6px 1px #eff47e, -1px -1px 5px 1px rgba(138,83,0,0.22);
   color: #f3f880;
 }
-.arrow{
-  width: 28px;
-  height: 28px;
+.arrow, .global-arrow{
+  width: 24px;
+  height: 24px;
   text-align: center;
   border: 2px solid black;
   border-radius: 50%;
-  font-size:1.2em;
-  font-weight: 500;
+  font-size:1em;
+  font-weight: 400;
   cursor:pointer;
 }
-.arrow:hover{
-  background: rgb(211, 208, 208);
+.arrow:hover, .global-arrow:hover{
+  box-shadow: 1px 1px 6px 1px #eff47e, -1px -1px 5px 1px rgba(138,83,0,0.22);
+  background: #eff47e;
 }
 .visible{
   display:flex;
@@ -314,39 +338,65 @@ margin-bottom: 1em;
 
 /* third column start */
 .third__column{
-    flex-basis: 29%;
+    flex-basis: 32%;
+    min-width: 32%;
 }
 .third__column__content{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 100%;
 }
 .country-data{
-  flex-basis:40%;
+  width: 100%;
+  flex-basis: 45%;
+  margin-bottom:10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid black;
+  background: #d0cdcd;
+}
+.canvas {
+  position: relative;
+  margin: auto;
+  width: 90%;
 }
 .chart{
-  max-width:100%;
-  flex-basis:60%;
+  flex-basis: 50%;
+  padding: 5px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background: #d0cdcd;
+  width: 100%;
 }
 
 .country-data__title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
+  margin-bottom: 8px;
 }
 .country-data__wrapper {
   display: flex;
+  font-size: 13px;
 }
-
+.country-data__container{
+  border: 2px solid black;
+  margin-right: 7px;
+  padding: 3px;
+}
+.country-data__container_per100K{
+  border: 2px solid black;
+    padding: 3px;
+}
 .country-info {
   padding: 3px 0;
-  width: 100%;
   text-align: left;
   border-bottom: 2px solid black;
   display: flex;
   align-items: center;
+  justify-content: start;
 }
 
 .parameter {
@@ -357,16 +407,25 @@ margin-bottom: 1em;
 /* media queries start*/
 @media(max-width:900px){
   .first__column{
-    /* order:2; */
     flex-basis:30%;
   }
   .second__column{
-    /* order:1; */
     flex-basis:70%;
   }
   .third__column{
-    /* order:3; */
     flex-basis:100%;
+  }
+  .third__column__content{
+    flex-direction: row;
+  }
+  .country-data{
+    flex-basis: 40%;
+    height: 100%;
+    margin: 0 10px 0 0;
+  }
+  .chart{
+    flex-basis: 60%;
+    height: 100%;
   }
 }
 @media(max-width:700px){
@@ -382,6 +441,12 @@ margin-bottom: 1em;
     order:3;
     flex-basis:60%;
   }
+  .third__column__content{
+    flex-direction: column;
+  }
+  .country-data{
+    margin: 0 0 10px;
+  }
   h1 {
     font-size:1.5em;
   }
@@ -389,19 +454,42 @@ margin-bottom: 1em;
     font-size: 1.2em;
   }
 }
-@media(max-width:500px){
+@media(max-width:600px){
   .first__column, .second__column, .third__column{
     flex-basis:100%;
   }
   .switcher {
     font-size:10px;
-    flex-basis: 20%;
   }
   h1 {
     font-size:1.2em;
   }
   h2{
     font-size: 1em;
+  }
+  #mapid{
+    height: 350px;
+  }
+}
+
+@media(max-width:450px){
+  .chart{
+    padding: 5px;
+  }
+  .arrow{
+    width: 22px;
+    height: 22px;
+    font-size: 1em;
+    margin: 4px;
+  }
+  .switcher, .switcher__chart{
+    margin: 2px;
+  }
+  .switcher:hover, .switcher.active, .switcher__chart:hover, .switcher__chart.active{
+    transform: scale(1.05);
+  }
+  #mapid{
+    max-height: 300px;
   }
 }
 /* media queries end*/
@@ -411,7 +499,7 @@ margin-bottom: 1em;
     width: 100%;
     margin:0 auto;
     display: flex;
-    height: 50px;
+    height: 7vh;
 }
 .footer__content{
     width: 500px;
