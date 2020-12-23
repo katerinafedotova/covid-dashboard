@@ -32,7 +32,7 @@ export default function generateTable(data, countryId) {
     const parameterPer100K = propertyPer100kPopulation(parameter.value, data[countryId].population);
     parametersPer100K.push(parameterPer100K);
 
-    countryParameter.innerText = parameter.value;
+    countryParameter.innerText = parameter.value.toLocaleString('en', { maximumFractionDigits: 0 });
     parameterName.innerText = parameter.name;
   });
   countryDataContainer.lastChild.style.border = 'none';
@@ -41,7 +41,7 @@ export default function generateTable(data, countryId) {
     const countryParameterPer100K = createDomElement('span', 'parameter', null, countryInfoPer100K);
     const parameterNamePer100K = createDomElement('div', 'parameter-name', null, countryInfoPer100K);
 
-    countryParameterPer100K.innerText = parametersPer100K[i];
+    countryParameterPer100K.innerText = parametersPer100K[i].toLocaleString('en', { maximumFractionDigits: 0 });
     parameterNamePer100K.innerText = parametersNamePer100K[i];
   }
   countryDataContainerPer100K.lastChild.style.border = 'none';
