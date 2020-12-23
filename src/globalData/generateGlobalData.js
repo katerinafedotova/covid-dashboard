@@ -63,5 +63,5 @@ export default function generateGlobalData(data, currentId = 0) {
   ];
 
   globalTitle.innerText = `Global ${parameters[currentId].name}`;
-  globalData.innerText = parameters[currentId].value;
+  globalData.innerText = parameters[currentId].value.toLocaleString('en', { maximumFractionDigits: 0 });
 }

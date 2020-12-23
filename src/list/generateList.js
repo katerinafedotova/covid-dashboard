@@ -38,7 +38,7 @@ export default function generateList(dataJson, targetName, targetId = 0) {
       countryCases.innerText = propertyPer100kPopulation(countryData.properties[id].value,
         countryData.population);
     } else {
-      countryCases.innerText = countryData.properties[targetId].value;
+      countryCases.innerText = countryData.properties[targetId].value.toLocaleString('en', { maximumFractionDigits: 0 });
     }
     countryName.innerText = countryData.country;
   });
