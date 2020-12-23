@@ -115,7 +115,7 @@ function setErrorScreen() {
   const canvas = document.getElementById('myCanvas');
   const context = ctx.getContext('2d');
   context.font = '16px Verdana';
-  context.fillText('No data available for this country', 20, 120);
+  context.fillText('No data available', 43, 120);
 }
 export default async function getChartDataPerCountry(countryName, countryPopulation, targetId) {
   const difference = getDatesDifference();

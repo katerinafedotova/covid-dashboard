@@ -10,6 +10,8 @@ import transformData from './utils/transformData';
 import createChart from './chart/createChart';
 import updateChartSwitchers from './chart/updateChartSwitchers';
 import getChartDataPerCountry from './chart/createCountryChart';
+import './assets/githubLogo.png';
+import './assets/rs_school_js.svg';
 
 const countriesListContainer = document.querySelector('.cases__by__country-list');
 const select = document.querySelector('.select');

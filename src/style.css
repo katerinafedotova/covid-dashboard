@@ -9,7 +9,7 @@ body {
 /* header start */
 .header{
     width:100%;
-    height: 10vh;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,7 +32,7 @@ body {
 
 /* main start*/
 .main{
-    height: 83vh;
+    /* height: 83vh; */
     padding: 10px;
 }
 .container{
@@ -41,7 +41,7 @@ body {
     text-align: center;
     flex-wrap:wrap;
     max-width: 1300px;
-    height: calc(100vh - 145px);
+    /* max-height: calc(100vh - 165px); */
     margin: 0 auto;
 }
 .first__column, .second__column, .third__column{
@@ -60,13 +60,19 @@ body {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    height: 100%;
 }
 .global__info{
   width: 100%;
+  margin-bottom: 10px;
+  padding: 3px;
+  flex-basis: 20%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 3px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background: #d0cdcd;
 }
 .global-arrow {
   width: 28px;
@@ -95,23 +101,37 @@ body {
     font-weight: 700;
     font-size: 1.4em;
 }
+.cases__by__country{
+  flex-basis: 80%;
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 10px;
+  background: #d0cdcd;
+  padding: 4px;
 
+}
 .category-name {
     font-weight: 700;
+    margin-bottom: 10px;
 }
-
+.select{
+  margin-bottom: 10px;
+}
 .search-country {
-  margin: 7px 0;
+  margin-bottom: 10px;
 }
 
 .cases__by__country-list {
-    max-height: 200px;
+    max-height: 223px;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
 }
 
 .country-data-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 3px 0;
     width: 100%;
     text-align: left;
@@ -119,12 +139,13 @@ body {
     display: flex;
     align-items: center;
     cursor: pointer;
+    font-size: 1em;
     transition: all .3s ease;
 }
 
 .country-data-container:hover,
 .country-data-container_active {
-  background-color: #c6cac9;
+  background-color: #f3f880;
 }
 
 .country-data-container_hide {
@@ -132,15 +153,15 @@ body {
 }
 
 .country-data-container img {
-    width: 44px;
-    height: 21px;
+    width: 40px;
+    height: 20px;
+    display: block;
 }
 
 .country-cases {
     margin-right: 7px;
     color: red;
     font-weight: 700;
-    font-size: 19px;
 }
 
 .country-name {
@@ -379,6 +400,7 @@ margin-bottom: 1em;
 }
 .country-data__wrapper {
   display: flex;
+  justify-content: center;
   font-size: 13px;
 }
 .country-data__container{
@@ -426,6 +448,9 @@ margin-bottom: 1em;
   .chart{
     flex-basis: 60%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
 @media(max-width:700px){
@@ -497,17 +522,45 @@ margin-bottom: 1em;
 /* footer start */
 .footer{
     width: 100%;
+    position:absolute;
     margin:0 auto;
     display: flex;
-    height: 7vh;
+    height:40px;
+    border: 1px solid black;
 }
 .footer__content{
-    width: 500px;
+    max-width: 500px;
     margin: 0 auto;
     padding: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items:center;
+}
+.footer__content p{
+  margin-right: 7px;
+  font-size: 1.1em;
+}
+.github {
+  margin-top:12px;
+  background-image: url(./assets/githubLogo.png);
+  background-repeat: no-repeat;
+  height: 50px;
+  width: 40px;
+  display: block;
+  margin-right: 7px;
+}
+.rsschool{
+  background-image: url(./assets/rs_school_js.svg);
+  height: 35px;
+  width: 95px;
+  background-repeat: no-repeat;
+  display: block;
+  margin: 12px 7px 0;
+}
+
+.github:hover, .rsschool:hover{
+  cursor: pointer;
+  transform: scale(1.1);
 }
 /* footer end */
 
