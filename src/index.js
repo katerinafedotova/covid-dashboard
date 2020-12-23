@@ -1,4 +1,5 @@
 import './style.css';
+import './assets/covid-19.ico';
 import createMap from './map/createMap';
 import updateSwitchers from './map/updateSwitchers';
 import generateList from './list/generateList';
