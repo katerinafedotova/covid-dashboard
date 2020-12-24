@@ -1,17 +1,32 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { statsArray, colors, sizeInEm } from '../constants/constants';
-import aspectRatioImg from '../assets/aspect_ratio-24px.svg';
 
 let geoJsonLayers;
 let legend;
-let fullScreen;
-export default function setLayers(mymap, geoJson, targetId, targetNum) {
+
+const addLegend = (parameterName, color, arr) => {
+  const legendSizeInEm = sizeInEm.map((el) => el / 2);
+  legend = L.control({ position: 'topright' });
+  legend.onAdd = () => {
+    const div = L.DomUtil.create('div', 'legend');
+    div.innerHTML += `<h4>${parameterName}</h4>`;
+    for (let i = 0; i < legendSizeInEm.length; i += 1) {
+      if (i === 0) {
+        div.innerHTML += `<div class = "legend__info__container"><div style="background: ${color}; height: ${legendSizeInEm[i]}em; width: ${legendSizeInEm[i]}em"></div><div> < ${arr[i].toLocaleString('en', { maximumFractionDigits: 0 })}</div></div>`;
+      } else {
+        div.innerHTML += `<div class = "legend__info__container"><div style="background: ${color}; height: ${legendSizeInEm[i]}em; width: ${legendSizeInEm[i]}em"></div><div> > ${arr[i].toLocaleString('en', { maximumFractionDigits: 0 })}</div></div>`;
+      }
+    }
+    return div;
+  };
+};
+
+const setLayers = (mymap, geoJson, targetId, targetNum) => {
   // check if switcher clicked
   if (targetId !== undefined) {
     mymap.removeLayer(geoJsonLayers);
     mymap.removeControl(legend);
-    mymap.removeControl(fullScreen);
   }
 
   let parameterName;
@@ -92,36 +107,7 @@ export default function setLayers(mymap, geoJson, targetId, targetNum) {
   });
   geoJsonLayers.addTo(mymap);
   // set legend
-  const legendSizeInEm = sizeInEm.map((el) => el / 2);
-  legend = L.control({ position: 'topright' });
-  legend.onAdd = () => {
-    const div = L.DomUtil.create('div', 'legend');
-    div.innerHTML += `<h4>${parameterName}</h4>`;
-    for (let i = 0; i < legendSizeInEm.length; i += 1) {
-      if (i === 0) {
-        div.innerHTML += `<div class = "legend__info__container"><div style="background: ${color}; height: ${legendSizeInEm[i]}em; width: ${legendSizeInEm[i]}em"></div><div> < ${arr[i].toLocaleString('en', { maximumFractionDigits: 0 })}</div></div>`;
-      } else {
-        div.innerHTML += `<div class = "legend__info__container"><div style="background: ${color}; height: ${legendSizeInEm[i]}em; width: ${legendSizeInEm[i]}em"></div><div> > ${arr[i].toLocaleString('en', { maximumFractionDigits: 0 })}</div></div>`;
-      }
-    }
-    return div;
-  };
-
+  addLegend(parameterName, color, arr);
   legend.addTo(mymap);
-
-  fullScreen = L.control({ position: 'bottomleft' });
-  fullScreen.onAdd = () => {
-    const div = L.DomUtil.create('div', 'aspect__ratio');
-    div.style.backgroundImage = `url(${aspectRatioImg})`;
-    div.addEventListener('click', () => {
-      const firstColumn = document.querySelector('.first__column');
-      const secondColumn = document.querySelector('.second__column');
-      const thirdColumn = document.querySelector('.third__column');
-      firstColumn.classList.toggle('none');
-      secondColumn.classList.toggle('fullscreen');
-      thirdColumn.classList.toggle('none');
-    });
-    return div;
-  };
-  fullScreen.addTo(mymap);
-}
+};
+export default setLayers;

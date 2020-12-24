@@ -1,4 +1,4 @@
-export default function updateChartSwitchers(e) {
+const updateChartSwitchers = (e) => {
   // check which arrow clicked
   let currentArrow = e.target;
   if (currentArrow.classList.contains('chart__right')) {
@@ -36,4 +36,5 @@ export default function updateChartSwitchers(e) {
   }
 
   sliderToDisplay.classList.toggle('visible');
-}
+};
+export default updateChartSwitchers;

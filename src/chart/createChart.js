@@ -3,7 +3,7 @@ import { colors, labelNames } from '../constants/constants';
 
 let ctx = document.getElementById('myChart');
 
-export default function createChart(chartData, targetId = 0) {
+const createChart = (chartData, targetId = 0) => {
   const canvasContainer = document.querySelector('.canvas');
   while (canvasContainer.firstChild) {
     if (canvasContainer.firstChild !== 'canvas') { canvasContainer.removeChild(canvasContainer.firstChild); }
@@ -100,4 +100,5 @@ export default function createChart(chartData, targetId = 0) {
     data: baseData,
     options: chartOptions,
   });
-}
+};
+export default createChart;

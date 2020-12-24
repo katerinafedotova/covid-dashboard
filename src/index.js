@@ -1,5 +1,6 @@
 import './style.css';
 import createMap from './map/createMap';
+// import createGeoJson from './utils/createGeoJson';
 import updateSwitchers from './map/updateSwitchers';
 import generateList from './list/generateList';
 import generateTable from './table/generateTable';

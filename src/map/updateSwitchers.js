@@ -1,4 +1,4 @@
-export default function updateSwitchers(e) {
+const updateSwitchers = (e) => {
   // check which arrow clicked
   let currentArrow = e.target;
   if (currentArrow.classList.contains('right')) {
@@ -35,4 +35,6 @@ export default function updateSwitchers(e) {
   }
 
   sliderToDisplay.classList.toggle('visible');
-}
+};
+
+export default updateSwitchers;

@@ -47,17 +47,13 @@ function createCountryChart(chartData, countryPopulation, targetId = 0) {
       recoveredPerDay.push(recoveredDifference);
     }
   }
-
-  const casesPer100kData = casesData.map((el) => ((el / countryPopulation) * 100000).toFixed(2));
-  const deathsPer100kData = deathsData.map((el) => ((el / countryPopulation) * 100000).toFixed(2));
-  const recoveredPer100kData = recoveredData.map((el) => ((el / countryPopulation)
-  * 100000).toFixed(2));
-  const casesPerDayPer100kData = casesPerDay.map((el) => ((el / countryPopulation)
-  * 100000).toFixed(2));
-  const deathsPerDayPer100kData = deathsPerDay.map((el) => ((el / countryPopulation)
-  * 100000).toFixed(2));
-  const recoveredPerDayPer100kData = recoveredPerDay.map((el) => ((el / countryPopulation)
-     * 100000).toFixed(2));
+  const format = (el) => ((el / countryPopulation) * 100000).toFixed(2);
+  const casesPer100kData = casesData.map(format);
+  const deathsPer100kData = deathsData.map(format);
+  const recoveredPer100kData = recoveredData.map(format);
+  const casesPerDayPer100kData = casesPerDay.map(format);
+  const deathsPerDayPer100kData = deathsPerDay.map(format);
+  const recoveredPerDayPer100kData = recoveredPerDay.map(format);
 
   const statisticsArr = [casesData, deathsData, recoveredData,
     casesPerDay, deathsPerDay, recoveredPerDay,
@@ -82,8 +78,6 @@ function createCountryChart(chartData, countryPopulation, targetId = 0) {
         fontColor: 'black',
       },
     },
-    // responsive: true,
-    // maintainAspectRatio: false,
     scales: {
       xAxes: [{
         type: 'time',
