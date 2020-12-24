@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COVID Dashboard</title>
+    <link rel="shortcut icon" href="./assets/covid-19.svg" type="image/ico">
+    <title>COVID-19 Dashboard</title>
 </head>
 <body>
+    <div></div>
     <header class="header">
         <div class="header__content">
             <h1>COVID-19 Dashboard</h1>
@@ -14,92 +16,179 @@
     </header>
 
     <main class="main">
+        <div class="info">
+            <div class="info__header">
+                <h4>About this project</h4>
+                <button class="close__button"></button>
+            </div>
+            <div class="info__content">
+                <div class="api">
+                    <h5>Data Sources: </h5>
+                    <ul>
+                        <li><a href="https://disease.sh/">Disease.sh</a> - Open Disease Data</li>
+                        <li><a href="https://covid19-api.org/">COVID-19 API</a> - Free API for Data on Coronavirus</li>
+                    </ul>
+                </div>
+                <div class="developers">
+                    <h5>Developed by:</h5>
+                    <ul>
+                        <li>Ekaterina Fedotova - <a href="https://github.com/katerinafedotova">Github</a></li>
+                        <li>Artem Avdeenko - <a href="https://github.com/spytni1212">Github</a></li>
+                    </ul>
+                    <p><b>for  </b><a href="https://github.com/katerinafedotova">RS School</a></p>
+                </div>
+                <p>Any questions? Ask us!</p>
+            </div>
+        </div>
         <div class="container">
             <div class="first__column">
                 <div class="first__column__content">
-                    <div class="cases__global">
-                        <h2>Global cases</h2>
+                    <div class="global__info">
+                        <div class="global-arrow left"> < </div>
+                        <div class="global__cases">
+                        </div>
+                        <div class="global-arrow right"> > </div>
                     </div>
-                </div>
-                <div class="cases__by__country">
-                    <div class="category-name"></div>
-                    <select class="select">
-                    <option class="select__value" data-id="0" data-value="cases" value="Cases">Cases</option>
-                    <option class="select__value" data-id="1" data-value="deaths" value="Deaths">Deaths</option>
-                    <option class="select__value" data-id="2" data-value="recovered" value="Recovered">Recovered</option>
-                    <option class="select__value" data-id="3" data-value="todayCases" value="Today Cases">Today Cases</option>
-                    <option class="select__value" data-id="4" data-value="todayDeaths" value="Today Deaths">Today Deaths</option>
-                    <option class="select__value" data-id="5" data-value="todayRecovered" value="Today Recovered">Today Recovered</option>
-                    <option class="select__value" data-id="6" data-value="cases" value="Cases per 100K">Cases per 100K</option>
-                    <option class="select__value" data-id="7" data-value="deaths" value="Deaths per 100K">Deaths per 100K</option>
-                    <option class="select__value" data-id="8" data-value="recovered" value="Recovered per 100K">Recovered per 100K</option>
-                    <option class="select__value" data-id="9" data-value="todayCases" value="Today Cases per 100K">Today Cases per 100K</option>
-                    <option class="select__value" data-id="10" data-value="todayDeaths" value="Today Deaths per 100K">Today Deaths per 100K</option>
-                    <option class="select__value" data-id="11" data-value="todayRecovered" value="Today Recovered per 100K">Today Recovered per 100K</option>
-                    </select>
-                    <div class="search-country">
-                        <input type="text" class="search">
+                    <div class="cases__by__country">
+                        <div class="category-name"></div>
+                        <select class="select">
+                        <option class="select__value" data-id="0" data-value="cases" value="Cases">Cases</option>
+                        <option class="select__value" data-id="1" data-value="deaths" value="Deaths">Deaths</option>
+                        <option class="select__value" data-id="2" data-value="recovered" value="Recovered">Recovered</option>
+                        <option class="select__value" data-id="3" data-value="todayCases" value="Today Cases">Today Cases</option>
+                        <option class="select__value" data-id="4" data-value="todayDeaths" value="Today Deaths">Today Deaths</option>
+                        <option class="select__value" data-id="5" data-value="todayRecovered" value="Today Recovered">Today Recovered</option>
+                        <option class="select__value" data-id="6" data-value="cases" value="Cases per 100K">Cases per 100K</option>
+                        <option class="select__value" data-id="7" data-value="deaths" value="Deaths per 100K">Deaths per 100K</option>
+                        <option class="select__value" data-id="8" data-value="recovered" value="Recovered per 100K">Recovered per 100K</option>
+                        <option class="select__value" data-id="9" data-value="todayCases" value="Today Cases per 100K">Today Cases per 100K</option>
+                        <option class="select__value" data-id="10" data-value="todayDeaths" value="Today Deaths per 100K">Today Deaths per 100K</option>
+                        <option class="select__value" data-id="11" data-value="todayRecovered" value="Today Recovered per 100K">Today Recovered per 100K</option>
+                        </select>
+                        <div class="search-country">
+                            <input type="text" class="search" placeholder="search country...">
+                        </div>
+                        <div class="cases__by__country-list" id="scroll"></div>
                     </div>
-                    <div class="cases__by__country-list"></div>
                 </div>
             </div>
             <div class="second__column">
                 <div class="second__column__content">
-                    <div id="mapid"></div>
-                    <div class="switchers">
-                        <div class="arrow left"> < </div>
-                        <div class="switchers__slider visible" data-slidernum = "1">
-                            <div class="switcher" data-id = "cases" data-num = "0">
-                                <div>Cases</div>
+                    <div class="content__container">
+                        <div id="mapid"></div>
+                        <div class="switchers">
+                            <div class="arrow map__left"> < </div>
+                            <div class="switchers__slider visible" data-slidernum = "1">
+                                <div class="switcher" data-id = "cases" data-num = "0">
+                                    <div>Cases</div>
+                                </div>
+                                <div class="switcher" data-id = "deaths" data-num = "1">
+                                    <div>Deaths</div>
+                                </div>
+                                <div class="switcher" data-id = "recovered" data-num = "2">
+                                    <div>Recovered</div>
+                                </div>
                             </div>
-                            <div class="switcher" data-id = "deaths" data-num = "1">
-                                <div>Deaths</div>
+                            <div class="switchers__slider" data-slidernum = "2">
+                                <div class="switcher" data-id = "today-cases" data-num = "3">
+                                    <div>Today Cases</div>
+                                </div>
+                                <div class="switcher" data-id = "today-deaths" data-num = "4">
+                                    <div>Today Deaths</div>
+                                </div>
+                                <div class="switcher" data-id = "today-recovered" data-num = "5">
+                                    <div>Today Recovered</div>
+                                </div>
                             </div>
-                            <div class="switcher" data-id = "recovered" data-num = "2">
-                                <div>Recovered</div>
+                            <div class="switchers__slider" data-slidernum = "3">
+                                <div class="switcher" data-id = "cases-per-100k" data-num = "6">
+                                    <div>Cases per 100k</div>
+                                </div>
+                                <div class="switcher" data-id = "deaths-per-100k" data-num = "7">
+                                    <div>Deaths per 100k</div>
+                                </div>
+                                <div class="switcher" data-id = "recovered-per-100k" data-num = "8">
+                                    <div>Recovered per 100k</div>
+                                </div>
                             </div>
+                            <div class="switchers__slider" data-slidernum = "4">
+                                <div class="switcher" data-id = "today-cases-per-100k" data-num = "9">
+                                    <div>Today Cases per 100k</div>
+                                </div>
+                                <div class="switcher" data-id = "today-deaths-per-100k" data-num = "10">
+                                    <div>Today Deaths per 100k</div>
+                                </div>
+                                <div class="switcher" data-id = "today-recovered-per-100k" data-num = "11">
+                                    <div>Today Recovered per 100k</div> 
+                                </div>
                         </div>
-                        <div class="switchers__slider" data-slidernum = "2">
-                            <div class="switcher" data-id = "today-cases" data-num = "3">
-                                <div>Today Cases</div>
-                            </div>
-                            <div class="switcher" data-id = "today-deaths" data-num = "4">
-                                <div>Today Deaths</div>
-                            </div>
-                            <div class="switcher" data-id = "today-recovered" data-num = "5">
-                                <div>Today Recovered</div>
-                            </div>
-                        </div>
-                        <div class="switchers__slider" data-slidernum = "3">
-                            <div class="switcher" data-id = "cases-per-100k" data-num = "6">
-                                <div>Cases per 100k</div>
-                            </div>
-                            <div class="switcher" data-id = "deaths-per-100k" data-num = "7">
-                                <div>Deaths per 100k</div>
-                            </div>
-                            <div class="switcher" data-id = "recovered-per-100k" data-num = "8">
-                                <div>Recovered per 100k</div>
-                            </div>
-                        </div>
-                        <div class="switchers__slider" data-slidernum = "4">
-                            <div class="switcher" data-id = "today-cases-per-100k" data-num = "9">
-                                <div>Today Cases per 100k</div>
-                            </div>
-                            <div class="switcher" data-id = "today-deaths-per-100k" data-num = "10">
-                                <div>Today Deaths per 100k</div>
-                            </div>
-                            <div class="switcher" data-id = "today-recovered-per-100k" data-num = "11">
-                                <div>Today Recovered per 100k</div> 
-                            </div>
-                        </div>
-                        <div class="arrow right"> > </div>
+                        <div class="arrow map__right"> > </div>
+                    </div>
                     </div>
                 </div>
             </div>
             <div class="third__column">
                 <div class="third__column__content">
-                    <div class="deaths__info">Deaths</div>
-                    <div class="chart">Chart</div>
+                    <div class="country-data">
+                        <div class="country-data__title"></div>
+                        <div class="country-data__wrapper">
+                            <div class="country-data__container"></div>
+                            <div class="country-data__container_per100K"></div>
+                        </div>
+                    </div>
+                    <div class="chart">
+                        <div class="canvas">
+                            <canvas id="myChart" height="200" width = "300"></canvas>
+                        </div>
+                        <div class="switchers__chart">
+                            <div class="arrow chart__left"> < </div>
+                            <div class="switchers__slider__chart visible" data-chartnum = "1">
+                                <div class="switcher__chart" data-chart = "0">
+                                    <div>Cases</div>
+                                </div>
+                                <div class="switcher__chart" data-chart = "1">
+                                    <div>Deaths</div>
+                                </div>
+                                <div class="switcher__chart" data-chart = "2">
+                                    <div>Recovered</div>
+                                </div>
+                            </div>
+                            <div class="switchers__slider__chart" data-chartnum = "2">
+                                <div class="switcher__chart" data-chart = "3">
+                                    <div>Cases per Day</div>
+                                </div>
+                                <div class="switcher__chart" data-chart = "4">
+                                    <div>Deaths per Day</div>
+                                </div>
+                                <div class="switcher__chart" data-chart = "5">
+                                    <div>Recovered per Day</div>
+                                </div>
+                            </div>
+                            <div class="switchers__slider__chart" data-chartnum = "3">
+                                <div class="switcher__chart" data-chart = "6">
+                                    <div>Cases per 100k</div>
+                                </div>
+                                <div class="switcher__chart" data-chart = "7">
+                                    <div>Deaths per 100k</div>
+                                </div>
+                                <div class="switcher__chart" data-chart = "8">
+                                    <div>Recovered per 100k</div>
+                                </div>
+                            </div>
+                            <div class="switchers__slider__chart" data-chartnum = "4">
+                                <div class="switcher__chart" data-chart = "9">
+                                    <div>Cases per Day per 100k</div>
+                                </div>
+                                <div class="switcher__chart" data-chart = "10">
+                                    <div>Deaths per Day per 100k</div>
+                                </div>
+                                <div class="switcher__chart" data-chart = "11">
+                                    <div>Recovered per Day per 100k</div> 
+                                </div>
+                            </div>
+                            <div class="arrow chart__right"> > </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -107,7 +196,16 @@
 
     <footer class="footer">
         <div class="footer__content">
-            <p>© 2020 COVID-19 Dashboard</p>
+            <p>© 2020</p>
+            <a href="https://github.com/katerinafedotova">
+                <div class="github"></div>
+            </a>
+            <a href="https://github.com/spytni1212">
+                <div class="github"></div>
+            </a>
+            <a href="https://rs.school/js/">
+                <div class="rsschool"></div>
+            </a>
         </div>
     </footer>
 </body>

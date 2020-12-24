@@ -1,21 +1,10 @@
 import createDomElement from '../utils/createDomElement';
+import cleanContainer from '../utils/cleanContainer';
+import propertyPer100kPopulation from '../utils/propertyPer100KPopulation';
 
 const casesListContainer = document.querySelector('.cases__by__country-list');
 const categoryName = document.querySelector('.category-name');
 const select = document.querySelector('.select');
-
-function cleanContainer(dataContainer) {
-  while (dataContainer.firstChild) {
-    dataContainer.removeChild(dataContainer.firstChild);
-  }
-}
-
-const propertyPer100kPopulation = (a, b) => {
-  if (b === 0) {
-    return 0;
-  }
-  return ((a / b) * 100000).toFixed(1);
-};
 
 export default function generateList(dataJson, targetName, targetId = 0) {
   cleanContainer(casesListContainer);
@@ -37,7 +26,9 @@ export default function generateList(dataJson, targetName, targetId = 0) {
   }
 
   countriesDataSort.forEach((countryData) => {
-    const countryDataContainer = createDomElement('div', 'country-data-container', null, casesListContainer);
+    const countryId = countriesDataSort.indexOf(countryData);
+
+    const countryDataContainer = createDomElement('div', 'country-data-container', null, casesListContainer, ['data-id', countryId]);
     const countryCases = createDomElement('span', 'country-cases', null, countryDataContainer);
     const countryName = createDomElement('span', 'country-name', null, countryDataContainer);
     const countryFlag = createDomElement('img', null, null, countryDataContainer, ['src', countryData.flag]);
@@ -47,7 +38,7 @@ export default function generateList(dataJson, targetName, targetId = 0) {
       countryCases.innerText = propertyPer100kPopulation(countryData.properties[id].value,
         countryData.population);
     } else {
-      countryCases.innerText = countryData.properties[targetId].value;
+      countryCases.innerText = countryData.properties[targetId].value.toLocaleString('en', { maximumFractionDigits: 0 });
     }
     countryName.innerText = countryData.country;
   });

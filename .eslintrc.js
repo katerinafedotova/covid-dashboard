@@ -11,10 +11,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-<<<<<<< HEAD
     'no-param-reassign': 'off',
-=======
     'no-unused-vars': 'off',
->>>>>>> global-cases-and-cases-by-country
   },
 };

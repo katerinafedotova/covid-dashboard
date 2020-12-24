@@ -1,12 +1,9 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import setLayers from './setLayers';
-// import 'leaflet-fullscreen/dist/leaflet.fullscreen.css';
-// import 'leaflet-fullscreen/dist/Leaflet.fullscreen';
-// import 'leaflet-fullscreen/dist/Leaflet.fullscreen.min';
 
 let mymap;
-export default function createMap(geoJson, targetId, targetNum) {
+const createMap = (geoJson, targetId, targetNum) => {
   if (targetId !== undefined) {
     setLayers(mymap, geoJson, targetId, targetNum);
   } else {
@@ -27,4 +24,5 @@ export default function createMap(geoJson, targetId, targetNum) {
     }).addTo(mymap);
     setLayers(mymap, geoJson);
   }
-}
+};
+export default createMap;
