@@ -1,5 +1,4 @@
 import './style.css';
-import './assets/covid-19.ico';
 import createMap from './map/createMap';
 import updateSwitchers from './map/updateSwitchers';
 import generateList from './list/generateList';
@@ -10,8 +9,7 @@ import transformData from './utils/transformData';
 import createChart from './chart/createChart';
 import updateChartSwitchers from './chart/updateChartSwitchers';
 import getChartDataPerCountry from './chart/createCountryChart';
-import './assets/githubLogo.png';
-import './assets/rs_school_js.svg';
+import { openAboutInfo, closeAboutInfo } from './aboutInfo/setAboutInfo';
 
 const countriesListContainer = document.querySelector('.cases__by__country-list');
 const select = document.querySelector('.select');
@@ -95,6 +93,10 @@ Array.from(chartSwitchers).forEach((switcher) => switcher.addEventListener('clic
 
 const chartArrows = Array.from([document.querySelector('.chart__left'), document.querySelector('.chart__right')]);
 chartArrows.forEach((arrow) => arrow.addEventListener('click', (e) => updateChartSwitchers(e)));
+
+// open and close project info
+document.querySelector('.about').addEventListener('click', () => openAboutInfo());
+document.querySelector('.close__button').addEventListener('click', () => closeAboutInfo());
 
 // accumulate data from API
 const getChartData = () => {

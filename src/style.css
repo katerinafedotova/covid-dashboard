@@ -6,6 +6,10 @@
 body {
     font-family: sans-serif;
     background: #2b2929;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 /* header start */
 .header{
@@ -29,13 +33,99 @@ body {
     text-transform: uppercase;
     cursor:pointer;
     margin:6px;
+    border: 2px solid #9c9999;
+    padding: 4px;
+    border-radius: 10px;
+}
+.about:hover{
+    box-shadow: 1px 1px 6px 1px #eff47e, -1px -1px 5px 1px rgba(138,83,0,0.22);
+    color: #f3f880;
+}
+.overlay{
+  position:absolute;
+  width:100%;
+  height:100%;
+  z-index: 10000;
+  background: #292929b8;
+}
+.info{
+    position:fixed;
+    top: 30%;
+    left: 50%;
+    height: 268px;
+    width: 303px;
+    padding: 12px;
+    background:#eee8e8;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+    line-height: 21px;
+    z-index:10001;
+    display:none;
+}
+.visible{
+  display:block;
+}
+.overflow-hidden{
+  overflow: hidden;
+}
+.info__header{
+  display: flex;
+  justify-content: space-between;
+  position:relative;
+  padding: 0 0 5px;
+  border-bottom: 1px solid black;
+}
+.info__header h4{
+  color: #d20707;
+}
+.close__button{
+  background-image: url(./assets/closeBtn.svg);
+  background-repeat: no-repeat;
+  background-position:center;
+  position: absolute;
+  top: -7px;
+  right: -3px;
+  height: 23px;
+  width: 23px;
+  border: 2px solid #686666;
+  border-radius:100%;
+  cursor:pointer;
+}
+.close__button:hover{
+  transform: scale(1.1);
+}
+a {
+  text-decoration: none;
+  color: #860808;
+  font-weight: 600;
+}
+.developers, .api {
+  margin-bottom: 10px;
+}
+.developers a:hover, .api a:hover {
+  text-decoration: underline;
+  cursor:pointer;
+}
+h4 {
+  font-size: 1.2em;
+}
+h5{
+  font-size: 1em;
+}
+.api ul, .developers ul{
+  margin-left: 14px;
+}
+.developers ul {
+  margin-bottom: 9px;
 }
 /* header end */
 
 /* main start*/
 .main{
-    /* height: 83vh; */
     padding: 10px;
+    flex-grow: 1;
 }
 .container{
     display: flex;
@@ -153,6 +243,7 @@ body {
     cursor: pointer;
     font-size: 1em;
     transition: all .3s ease;
+    line-height: 20px;
 }
 
 .country-data-container:hover,
@@ -174,10 +265,12 @@ body {
     margin-right: 7px;
     color:#d20707;
     font-weight: 700;
+    line-height: 20px;
 }
 
 .country-name {
     margin-right: 20px;
+    line-height: 20px;
 }
 
 mark {
@@ -546,7 +639,7 @@ margin-bottom: 1em;
 /* footer start */
 .footer{
     width: 100%;
-    position:absolute;
+    flex-shrink: 0;
     margin:0 auto;
     display: flex;
     height:40px;
